@@ -1,0 +1,21 @@
+Cassius is a script engine designed to make embedding programming languages easier. Instead of directly embedding the language: you embedd Cassius and use its API. This allows a fairly common level of functionality to be supported across several languages.
+
+For the most part, whether you are embedding SpiderMonkey, V8, Python, Lua, etc, your code should still compile. Cassius takes care of as many details as it can. Of course, if you load a Python back end and try feeding it Lua, that's your problem :-P.
+
+
+General Dependencies:
+	C++ Compiler
+		The GNU and Microsoft compilers are supported and tested.
+		If one of backends supported by Cassius requires a different
+		compiler, Cassius will compile with it.
+
+	premake <http://industriousone.com/premake>
+		Used to build Cassius.
+
+	cxx-plugin <http://github.com/Spidey01/cxx-plugin>
+		Used for loading the language backends at run time.
+
+Specific Dependencies:
+	Lua <http://www.lua.org/>
+		Tested against Lua 5.1; other versions probably work fine.
+
