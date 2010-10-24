@@ -6,6 +6,8 @@ solution "Cassius"
     project "Cassius"
         kind "SharedLib"
         language "C++"
+        objdir(path.join("Build", project().name))
+        targetdir(path.join("Dist", configurations()[1]))
         files { 
             "Include/**.hpp", 
             "Source/**.cpp",
