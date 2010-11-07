@@ -24,7 +24,7 @@ namespace Cassius {
         delete[] source;
     }
 
-    const string SourceString::get()
+    string SourceString::get()
     {
         // easy safe guard against mutability of this->source
         return string(source);

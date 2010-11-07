@@ -12,7 +12,7 @@ namespace Cassius {
       public:
         SourceString(const char *code, size_t length=0);
         virtual ~SourceString();
-        virtual const std::string get();
+        virtual std::string get();
 
       private:
         SourceString(const SourceString &other);

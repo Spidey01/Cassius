@@ -10,7 +10,7 @@ namespace Cassius {
     class Source {
       public:
         virtual ~Source() {};
-        virtual const std::string get() = 0;
+        virtual std::string get() = 0;
     };
 }
 
