@@ -3,6 +3,8 @@
 solution "Cassius"
     configurations { "Development", "Release", "Debug" }
 
+    include "Deps"
+
     project "Cassius"
         kind "SharedLib"
         language "C++"
@@ -12,4 +14,6 @@ solution "Cassius"
             "Include/**.hpp", 
             "Source/**.cpp",
         }
+        links { "CxxPlugin" }
+        includedirs { "Deps/cxx-plugin/include" }
 
