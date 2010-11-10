@@ -19,7 +19,7 @@ namespace Cassius {
           case LANG_LUA:
           {
             if (!backends.clua) {
-                backends.clua = new CxxPlugin("CassiusLuaEngine");
+                backends.clua = new CxxPlugin("CassiusCluaEngine");
                 backends.new_clua = (fptr_t)backends.clua->load_funcptr("new_clua");
                 if (!backends.new_clua) {
                     return 0;
