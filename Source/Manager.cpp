@@ -16,21 +16,20 @@ namespace Cassius {
     Engine *Manager::CreateEngine(ScriptLanguages lang, Backends impl)
     {
         switch (lang) {
-          case LANG_LUA:
-          {
-            if (!backends.clua) {
-                backends.clua = new CxxPlugin("CassiusCluaEngine");
-                backends.new_clua = (fptr_t)backends.clua->load_funcptr("new_clua");
-                if (!backends.new_clua) {
-                    return 0;
+            case LANG_LUA:
+                {
+                    if (!backends.clua) {
+                        backends.clua = new CxxPlugin("CassiusCluaEngine");
+                        backends.new_clua = (fptr_t)backends.clua->load_funcptr("new_clua");
+                        if (!backends.new_clua) {
+                            return 0;
+                        }
+                    }
+                    return backends.new_clua();
+                    break;
                 }
-            }
-            return backends.new_clua();
-            break;
-          }
-
-          default:
-            return 0;
+            default:
+                return 0;
         }
     }
 
