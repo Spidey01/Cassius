@@ -28,6 +28,18 @@ namespace Cassius {
                     return backends.new_clua();
                     break;
                 }
+            case LANG_PYTHON:
+                {
+                    if (!backends.cpython) {
+                        backends.cpython = new CxxPlugin("CassiusCpythonEngine");
+                        backends.new_cpython = (fptr_t)backends.cpython->load_funcptr("new_cpython");
+                        if (!backends.new_cpython) {
+                            return 0;
+                        }
+                    }
+                    return backends.new_cpython();
+                    break;
+                }
             default:
                 return 0;
         }

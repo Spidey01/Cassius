@@ -8,6 +8,7 @@ namespace Cassius {
      */
     enum ScriptLanguages {
         LANG_LUA,
+        LANG_PYTHON,
     };
 
     /**
@@ -20,6 +21,7 @@ namespace Cassius {
     enum Backends {
         IMPL_DEFAULT,
         IMPL_CLUA,
+        IMPL_CPYTHON,
     };
 }
 #endif

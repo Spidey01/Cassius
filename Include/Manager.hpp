@@ -54,6 +54,9 @@ namespace Cassius {
         struct {
             CxxPlugin *clua;
             fptr_t new_clua;
+
+            CxxPlugin *cpython;
+            fptr_t new_cpython;
         } backends;
     };
 }
