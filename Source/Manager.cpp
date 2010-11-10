@@ -3,6 +3,9 @@
 
 #include <CxxPlugin.hxx>
 
+#include <stdexcept>
+#include <cassert>
+
 namespace Cassius {
 
     Manager::Manager()
@@ -11,6 +14,29 @@ namespace Cassius {
 
     Manager::~Manager()
     {
+        std::list<Engine *>::iterator it;
+
+        for (it=engines.begin(); it != engines.end(); ++it) {
+            deleteengine_fptr_t delete_engine;
+
+            switch ((*it)->lang) {
+                case LANG_LUA:
+                    assert(backends.delete_clua != 0);
+                    delete_engine = backends.delete_clua;
+                    break;
+                case LANG_PYTHON:
+                    assert(backends.delete_cpython != 0);
+                    delete_engine = backends.delete_cpython;
+                    break;
+                default:
+                    // NOTREACHED
+                    throw std::runtime_error( "Cassius::Manager -> "
+                                              "Attempt to delete an unknown"
+                                              "type script engine.");
+                    break;
+            }
+            delete_engine(*it);
+        }
     }
 
     Engine *Manager::CreateEngine(ScriptLanguages lang, Backends impl)
@@ -22,7 +48,8 @@ namespace Cassius {
         if (!backends. n ) { \
             backends. n = new CxxPlugin((plugname)); \
             backends.new_##n = (newengine_fptr_t)backends. n ->load_funcptr("new_" #n ); \
-            if (!backends.new_##n ) { \
+            backends.delete_##n = (deleteengine_fptr_t)backends. n ->load_funcptr("delete_" #n ); \
+            if ( (!backends.new_##n ) || (!backends.delete_##n ) ) { \
                 return 0; \
             } \
         } \

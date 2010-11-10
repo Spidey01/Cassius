@@ -32,4 +32,4 @@ namespace Cassius {
 }
 
 extern "C" Cassius::Engine *new_clua(void) { return new Cassius::CluaEngine(); }
-
+extern "C" void delete_clua(Cassius::Engine *obj) { delete obj; }

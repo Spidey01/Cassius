@@ -26,5 +26,5 @@ namespace Cassius {
 }
 
 extern "C" Cassius::Engine *new_cpython(void) { return new Cassius::CpythonEngine(); }
-
+extern "C" void delete_cpython(Cassius::Engine *obj) { delete obj; }
 

@@ -50,13 +50,16 @@ namespace Cassius {
 
         std::list<Engine *> engines;
 
-        typedef Engine *(*fptr_t)();
+        typedef Engine *(*newengine_fptr_t)();
+        typedef void (*deleteengine_fptr_t)(Engine *);
         struct {
             CxxPlugin *clua;
-            fptr_t new_clua;
+            newengine_fptr_t new_clua;
+            deleteengine_fptr_t delete_clua;
 
             CxxPlugin *cpython;
-            fptr_t new_cpython;
+            newengine_fptr_t new_cpython;
+            deleteengine_fptr_t delete_cpython;
         } backends;
     };
 }
