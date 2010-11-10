@@ -19,7 +19,7 @@ namespace Cassius {
      */
     enum Backends {
         IMPL_DEFAULT,
-        IMPL_LUA,
+        IMPL_CLUA,
     };
 }
 #endif
