@@ -11,14 +11,17 @@ namespace Cassius {
     class SourceString : public Source {
       public:
         SourceString(const char *code, size_t length=0);
+        SourceString(const SourceString &other) { docopy(other); }
+        const SourceString &operator=(const SourceString &other);
         virtual ~SourceString();
+
         virtual std::string get();
 
       private:
-        SourceString(const SourceString &other);
+        void docopy(const SourceString &other);
 
         char *source;
-        size_t _length;
+        size_t length;
     };
 }
 
