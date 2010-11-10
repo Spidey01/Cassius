@@ -15,34 +15,42 @@ namespace Cassius {
 
     Engine *Manager::CreateEngine(ScriptLanguages lang, Backends impl)
     {
+        newengine_fptr_t newengine;
+
+#define LOAD_ENGINE(n, plugname) \
+    do { \
+        if (!backends. n ) { \
+            backends. n = new CxxPlugin((plugname)); \
+            backends.new_##n = (newengine_fptr_t)backends. n ->load_funcptr("new_" #n ); \
+            if (!backends.new_##n ) { \
+                return 0; \
+            } \
+        } \
+    } while (0)
+
+
         switch (lang) {
             case LANG_LUA:
                 {
-                    if (!backends.clua) {
-                        backends.clua = new CxxPlugin("CassiusCluaEngine");
-                        backends.new_clua = (fptr_t)backends.clua->load_funcptr("new_clua");
-                        if (!backends.new_clua) {
-                            return 0;
-                        }
-                    }
-                    return backends.new_clua();
+                    LOAD_ENGINE(clua, "CassiusCluaEngine");
+                    newengine = backends.new_clua;
                     break;
                 }
             case LANG_PYTHON:
                 {
-                    if (!backends.cpython) {
-                        backends.cpython = new CxxPlugin("CassiusCpythonEngine");
-                        backends.new_cpython = (fptr_t)backends.cpython->load_funcptr("new_cpython");
-                        if (!backends.new_cpython) {
-                            return 0;
-                        }
-                    }
-                    return backends.new_cpython();
+                    LOAD_ENGINE(cpython, "CassiusCpythonEngine");
+                    newengine = backends.new_cpython;
                     break;
                 }
             default:
                 return 0;
         }
+
+        Engine *e = newengine();
+        e->lang = lang;
+        e->impl = impl;
+        engines.push_back(e);
+        return e;
     }
 
 }
