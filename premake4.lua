@@ -23,8 +23,8 @@ solution "Cassius"
         }
         excludes {
             -- files specific to other projects
-            "Include/LuaEngine.cpp",
-            "Source/LuaEngine.cpp",
+            "Include/CluaEngine.cpp",
+            "Source/CluaEngine.cpp",
         }
         links { "CxxPlugin" }
         includedirs { "Deps/cxx-plugin/include" }
