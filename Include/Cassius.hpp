@@ -21,6 +21,5 @@ namespace Cassius {
         IMPL_DEFAULT,
         IMPL_LUA,
     };
-
 }
 #endif
