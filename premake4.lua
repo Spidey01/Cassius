@@ -10,6 +10,14 @@ end
 solution "Cassius"
     configurations { "Development", "Release", "Debug" }
 
+    configuration "Development"
+        flags { "ExtraWarnings" }
+    configuration "Release"
+        flags { "OptimizeSpeed" }
+        defines { "NDEBUG" }
+    configuration "Debug"
+        flags { "Symbols", }
+
     include "Deps"
 
     project "Cassius"
