@@ -16,6 +16,11 @@ General Dependencies:
 		Used for loading the language backends at run time.
 
 Specific Dependencies:
+
+	These dependencies are only needed if you wish to build the relevant components of Cassius.
+
 	Lua <http://www.lua.org/>
 		Tested against Lua 5.1; other versions probably work fine.
 
+	Python <http://www.python.org/>
+		Currently this is only supported on GNU Make builds and requires python-config in $PATH.
