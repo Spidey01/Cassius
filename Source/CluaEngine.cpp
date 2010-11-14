@@ -14,6 +14,8 @@ using std::runtime_error;
 using std::logic_error;
 using std::range_error;
 
+#define UPDATE_COUNTERS stacksize++; nargs++
+
 namespace Cassius {
 
     CluaEngine::CluaEngine()
@@ -58,37 +60,32 @@ namespace Cassius {
     void CluaEngine::Push(bool b)
     {
         lua_pushboolean(interp, b);
-        stacksize++;
-        nargs++;
+        UPDATE_COUNTERS;
     }
 
     void CluaEngine::Push(char c)
     {
         lua_pushlstring(interp, &c, 1);
-        stacksize++;
-        nargs++;
+        UPDATE_COUNTERS;
     }
 
     void CluaEngine::Push(int i)
     {
         lua_pushinteger(interp, i);
-        stacksize++;
-        nargs++;
+        UPDATE_COUNTERS;
     }
 
     void CluaEngine::Push(double r)
     {
         lua_pushnumber(interp, r);
-        stacksize++;
-        nargs++;
+        UPDATE_COUNTERS;
     }
 
 
     void CluaEngine::Push(const char *s)
     {
         lua_pushstring(interp, s);
-        stacksize++;
-        nargs++;
+        UPDATE_COUNTERS;
     }
 
     void CluaEngine::Pop(size_t n)
