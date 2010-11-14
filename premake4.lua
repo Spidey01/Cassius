@@ -1,6 +1,7 @@
 -- premake build script for Cassius
 
 dofile "lib.lua"
+dofile "opts.lua"
 
 solution "Cassius"
     configurations { "Development", "Release", "Debug" }
@@ -42,7 +43,9 @@ solution "Cassius"
         }
         targetprefix("")
         links { "Cassius", "lua" }
-        includedirs { "Deps/lua/src/" }
+        if _OPTIONS["with-lua"] == "own" then
+            includedirs { "Deps/lua/src/" }
+        end
 
     project "CassiusCpythonEngine"
         kind "SharedLib"
