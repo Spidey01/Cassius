@@ -27,9 +27,9 @@ solution "Cassius"
         }
         excludes {
             -- files specific to other projects
-            "Include/CluaEngine.cpp",
+            "Include/CluaEngine.hpp",
             "Source/CluaEngine.cpp",
-            "Include/CpythonEngine.cpp",
+            "Include/CpythonEngine.hpp",
             "Source/CpythonEngine.cpp",
         }
         links { "CxxPlugin" }
