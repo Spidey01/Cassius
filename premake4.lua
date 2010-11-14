@@ -5,6 +5,8 @@ dofile "opts.lua"
 
 solution "Cassius"
     configurations { "Development", "Release", "Debug" }
+    
+    includedirs { "Include" }
 
     if os.get() == 'windows' then defines { "_WIN32" } 
     else
@@ -31,10 +33,7 @@ solution "Cassius"
         targetdir(getdistdir())
         make_Engine_templates() -- creates .tpp file for Engine class
         files { 
-            "Source/Engine.cpp",
-            "Source/SourceStream.cpp",
-            "Source/Manager.cpp",
-            "Source/SourceString.cpp"
+            "Source/Cassius/*.cpp",
         }
         links { "CxxPlugin" }
         includedirs { "Deps/cxx-plugin/include" }
@@ -45,7 +44,7 @@ solution "Cassius"
         objdir(getobjdir())
         targetdir(getdistdir())
         files {
-            "Source/CluaEngine.cpp",
+            "Source/CluaEngine/*.cpp",
         }
         targetprefix("")
         links { "Cassius", "lua" }
@@ -59,7 +58,7 @@ solution "Cassius"
         objdir(getobjdir())
         targetdir(getdistdir())
         files {
-            "Source/CpythonEngine.cpp",
+            "Source/CpythonEngine/*.cpp",
         }
         targetprefix("")
         links { "Cassius" }

@@ -1,8 +1,8 @@
 
-#include "../Include/CpythonEngine.hpp"
-
-#include <stdexcept>
 #include <iostream>
+#include <stdexcept>
+
+#include <Cassius/CpythonEngine.hpp>
 
 namespace Cassius {
 

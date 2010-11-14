@@ -1,7 +1,8 @@
-#include <istream>
-#include <iostream>
 
-#include "../Include/SourceStream.hpp"
+#include <iostream>
+#include <istream>
+
+#include <Cassius/SourceStream.hpp>
 
 using std::istream;
 using std::string;
@@ -19,7 +20,7 @@ namespace Cassius {
     {
     }
 
-    std::string SourceStream::get()
+    string SourceStream::get()
     {
         return code.str();
     }

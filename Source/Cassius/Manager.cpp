@@ -1,10 +1,14 @@
 
-#include "../Include/Manager.hpp"
+#include <cassert>
+
+#include <stdexcept>
 
 #include <CxxPlugin.hxx>
 
-#include <stdexcept>
-#include <cassert>
+#include <Cassius/Manager.hpp>
+
+using std::list;
+using std::runtime_error;
 
 namespace Cassius {
 
@@ -14,7 +18,7 @@ namespace Cassius {
 
     Manager::~Manager()
     {
-        std::list<Engine *>::iterator it;
+        list<Engine *>::iterator it;
 
         for (it=engines.begin(); it != engines.end(); ++it) {
             deleteengine_fptr_t delete_engine;
@@ -30,7 +34,7 @@ namespace Cassius {
                     break;
                 default:
                     // NOTREACHED
-                    throw std::runtime_error( "Cassius::Manager -> "
+                    throw runtime_error( "Cassius::Manager -> "
                                               "Attempt to delete an unknown"
                                               "type script engine.");
                     break;

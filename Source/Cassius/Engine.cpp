@@ -1,4 +1,4 @@
-#include "../Include/Engine.hpp"
+#include <Cassius/Engine.hpp>
 
 namespace Cassius {
 

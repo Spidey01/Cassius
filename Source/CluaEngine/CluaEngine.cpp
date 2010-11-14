@@ -1,13 +1,10 @@
 
-#include "../Include/CluaEngine.hpp"
+#include <cassert>
+#include <climits>
 
 #include <stdexcept>
 
-#include <cassert>
-#include <cstdarg>
-#include <climits>
-
-#include <cstdio>
+#include <Cassius/CluaEngine.hpp>
 
 using std::runtime_error;
 using std::logic_error;
