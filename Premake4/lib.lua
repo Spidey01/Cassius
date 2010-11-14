@@ -1,9 +1,17 @@
 function getobjdir()
-    return path.join("Build", project().name)
+    return path.join(solution().basedir,
+                     path.join("Build", path.join(_ACTION, project().name)))
 end
 
 function getdistdir()
-    return path.join("Dist", configurations()[1])
+    -- There is no way to get the current configuration until > premake 4.3.
+    -- So just use the current action. Previously Dist/<first config> was
+    -- always used for this, to ease running my test.sh script.
+    return path.join(solution().basedir, path.join("Dist", _ACTION))
+end
+
+function getdepsdir()
+    return path.join(solution().basedir, "Deps")
 end
 
 function make_Engine_templates()
@@ -43,7 +51,7 @@ function make_Engine_templates()
         return s
     end
 
-    local fname = path.join(solution().basedir, "Include/Engine.tpp")
+    local fname = path.join(solution().basedir, "Include/Cassius/Engine.tpp")
     local relfname = path.getrelative(solution().basedir, fname)
     if _ACTION == "clean" then
         print("Removing " .. relfname)

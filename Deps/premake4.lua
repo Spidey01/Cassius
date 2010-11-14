@@ -3,20 +3,22 @@
 -- used for loading backends
 --
 project "CxxPlugin"
-language "C++"
-kind "StaticLib"
-targetdir(os.getcwd())  -- this will be in THIS directory
-files {
-    "cxx-plugin/include/*.*",
-    "cxx-plugin/src/**.cxx"
-}
-includedirs { "cxx-plugin/include" }
+    language "C++"
+    kind "StaticLib"
+    objdir(getobjdir())
+    targetdir(getdistdir())
+    files {
+        "cxx-plugin/include/*.*",
+        "cxx-plugin/src/**.cxx"
+    }
+    includedirs { "cxx-plugin/include" }
 
 if _OPTIONS["with-lua"] == "own" then
     project "lua"
         language "C"
         kind "StaticLib"
-        targetdir(os.getcwd())
+        objdir(getobjdir())
+        targetdir(getdistdir())
         files {
             "lua/src/lapi.c", "lua/src/lcode.c", "lua/src/ldebug.c",
             "lua/src/ldo.c", "lua/src/ldump.c", "lua/src/lfunc.c",
