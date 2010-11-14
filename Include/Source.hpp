@@ -3,11 +3,13 @@
 
 #include <string>
 
+#include "Cassius.hpp"
+
 namespace Cassius {
     /** Abstract base class representing an executable chunk of Source code
      *
      */
-    class Source {
+    class CASSIUS_API Source {
       public:
         virtual ~Source() {};
         virtual std::string get() = 0;

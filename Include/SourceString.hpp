@@ -8,7 +8,7 @@
 namespace Cassius {
     /** Simple class representing an executable chunk of Source code as a string
      */
-    class SourceString : public Source {
+    class CASSIUS_API SourceString : public Source {
       public:
         SourceString(const char *code, size_t length=0);
         SourceString(const SourceString &other) { docopy(other); }

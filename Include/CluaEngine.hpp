@@ -1,13 +1,18 @@
 #ifndef CASSIUS_INCLUDE_CLUAENGINE_HPP
 #define CASSIUS_INCLUDE_CLUAENGINE_HPP
 
+extern "C" {
+#   include <lua.hpp>
+#   include <lualib.h>
+#   include <lauxlib.h>
+}
+
 #include "Engine.hpp"
 #include "Source.hpp"
 
-#include <lua.hpp>
 
 namespace Cassius {
-    class CluaEngine : public Engine {
+    class CASSIUS_API CluaEngine : public Engine {
       public:
         CluaEngine();
         virtual ~CluaEngine();

@@ -1,6 +1,12 @@
 #ifndef CASSIUS_INCLUDE_CASSIUS_HPP
 #define CASSIUS_INCLUDE_CASSIUS_HPP
 
+#if defined(_WIN32) || defined(__WIN64)
+#	define CASSIUS_API __declspec(dllexport)
+#else
+#	define CASSIUS_API /* sane */
+#endif
+
 namespace Cassius {
 
     /**

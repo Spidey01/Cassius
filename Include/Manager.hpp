@@ -1,10 +1,10 @@
 #ifndef CASSIUS_INCLUDE_MANAGER_HPP
 #define CASSIUS_INCLUDE_MANAGER_HPP
 
+#include <list>
+
 #include "Cassius.hpp"
 #include "Engine.hpp"
-
-#include <list>
 
 class CxxPlugin;
 
@@ -17,7 +17,7 @@ namespace Cassius {
      * take your chances trying to embed several languages into the same
      * program.
      */
-    class Manager {
+    class CASSIUS_API Manager {
       public:
         Manager();
         virtual ~Manager();

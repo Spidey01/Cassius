@@ -8,7 +8,6 @@
 #include <climits>
 
 #include <cstdio>
-#include <iostream>
 
 using std::runtime_error;
 using std::logic_error;
@@ -43,7 +42,7 @@ namespace Cassius {
 
     void CluaEngine::Call(void)
     {
-        if (nargs > (stacksize - 1)) {
+        if (stacksize > 0 && nargs > (stacksize - 1)) {
             throw logic_error("CluaEngine::Call() -> internal data is FUBAR");
         }
         lua_call(interp, nargs, 0);

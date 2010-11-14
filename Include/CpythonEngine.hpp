@@ -5,12 +5,11 @@
 // The docs say it should come before all standard headers.
 #include <Python.h>
 
-
 #include "Engine.hpp"
 #include "Source.hpp"
 
 namespace Cassius {
-    class CpythonEngine : public Engine {
+    class CASSIUS_API CpythonEngine : public Engine {
       public:
         CpythonEngine();
         virtual ~CpythonEngine();

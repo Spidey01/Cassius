@@ -1,13 +1,13 @@
 #ifndef CASSIUS_INCLUDE_ENGINE_HPP
 #define CASSIUS_INCLUDE_ENGINE_HPP
 
+#include <iostream>
+
 #include "Cassius.hpp"
 #include "Source.hpp"
 
-#include <iostream>
-
 namespace Cassius {
-    class Engine {
+    class CASSIUS_API Engine {
       public:
         Engine () {}
         virtual ~Engine() {};

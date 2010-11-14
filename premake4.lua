@@ -5,6 +5,8 @@ dofile "lib.lua"
 solution "Cassius"
     configurations { "Development", "Release", "Debug" }
 
+    if os.get() == 'windows' then defines { "_WIN32" } end
+
     configuration "Development"
         flags { "ExtraWarnings" }
     configuration "Release"
@@ -40,6 +42,7 @@ solution "Cassius"
         }
         targetprefix("")
         links { "Cassius", "lua" }
+        includedirs { "Deps/lua/src/" }
 
     project "CassiusCpythonEngine"
         kind "SharedLib"
@@ -51,7 +54,9 @@ solution "Cassius"
         }
         targetprefix("")
         links { "Cassius" }
-        if os.get() == 'windows' then print("warning: building python support on Windows not premade yet!") end
+        if os.get() == 'windows' then
+           print("warning: building python support on Windows not premade yet!")
+        end
         configuration "gmake"
             buildoptions "`python-config --cflags`"
             linkoptions "`python-config --libs`"
