@@ -1,11 +1,6 @@
 -- premake build script for Cassius
 
-function getobjdir()
-    return path.join("Build", project().name)
-end
-function getdistdir()
-    return path.join("Dist", configurations()[1])
-end
+dofile "lib.lua"
 
 solution "Cassius"
     configurations { "Development", "Release", "Debug" }
@@ -25,6 +20,7 @@ solution "Cassius"
         language "C++"
         objdir(getobjdir())
         targetdir(getdistdir())
+        make_Engine_templates() -- creates .tpp file for Engine class
         files { 
             "Include/**.hpp", 
             "Source/**.cpp",
@@ -49,7 +45,7 @@ solution "Cassius"
             "Source/CluaEngine.cpp",
         }
         targetprefix("")
-        links "lua"
+        links { "Cassius", "lua" }
 
     project "CassiusCpythonEngine"
         kind "SharedLib"
@@ -61,6 +57,7 @@ solution "Cassius"
             "Source/CpythonEngine.cpp",
         }
         targetprefix("")
+        links { "Cassius" }
         if os.get() == 'windows' then print("warning: building python support on Windows not premade yet!") end
         configuration "gmake"
             buildoptions "`python-config --cflags`"
