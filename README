@@ -1,4 +1,4 @@
-Cassius is a script engine designed to make embedding programming languages easier. Instead of directly embedding the language: you embedd Cassius and use its API. This allows a fairly common level of functionality to be supported across several languages.
+Cassius is a script engine designed to make it easier to embed scripting languages in C++ programs. Instead of directly embedding the language using it's own API, you embedd Cassius and use its API. This allows a fairly common level of functionality to be supported across several languages, and thus you can embed several different scripting languages if desired.
 
 For the most part, whether you are embedding SpiderMonkey, V8, Python, Lua, etc, your code should still compile. Cassius takes care of as many details as it can. Of course, if you load a Python back end and try feeding it Lua, that's your problem :-P.
 
@@ -7,10 +7,10 @@ General Dependencies:
 	C++ Compiler
 		The GNU and Microsoft compilers are supported and tested.
 		If one of backends supported by Cassius requires a different
-		compiler, Cassius will compile with it.
+		compiler, then Cassius will also compile with it.
 
 	premake <http://industriousone.com/premake>
-		Used to build Cassius.
+		Used to build Cassius. A recent 4.x version is *preferred*.
 
 	cxx-plugin <http://github.com/Spidey01/cxx-plugin>
 		Used for loading the language backends at run time.
@@ -24,3 +24,40 @@ Specific Dependencies:
 
 	Python <http://www.python.org/>
 		Currently this is only supported on GNU Make builds and requires python-config in $PATH.
+
+Building Instructions:
+
+  0. Make sure you have a suitable copy of premake4.
+  1. Check your compiler.
+  	0. Windows builds should use Visual C++.
+  		1.0.0. tested with 2008 Express Edition
+  		1.0.1. tested with 2010 Express Edition
+  	1. Unix builds should use GNU C++.
+  		1.1.0. tested with recent versions of GCC 4 on Linux.
+  	2. C++0x features require a suitable compiler.
+  2. Make sure you have dependencies sorted out.
+	0. If using own dependencies, the source code should be installed into
+	   Deps/{project}. Where {project} is the name of the project listed in
+	   Deps/premake4.lua for that specific depedency, e.g.  cxx-plugin.
+	1. If using system dependencies, it should be in your toolsets default
+	   search paths for library/header files.  In some cases you may have to
+	   adjust the premake4 Lua scripts. Look at the defines, libdirs,
+	   includedirs, and links functions in the premake4 user guide.
+  3. Change directory to the project root, e.g. ${HOME}/Downloads/Cassius.
+  4. Run premake4 [options] action [arguments], where action is the
+     build tool. Run premake4 --help for details.
+  	0. premake4 gmake = makefiles for GNU make.
+  	1. premake4 vs2010 = project files for Visual C++ 2010
+	2. you may or may not need to supply options or arguments, depending on
+	   the type of build you desire.
+  5. Change directory to Build/toolset and start the build.
+  	0. It is assumed you know how to use toolset.
+  	1. When in doubt, use Google or ask.
+	2. Building the solution builds everything, i.e. Cassius and all the
+	   backends available for that toolset/platform.
+	3. If you only want specific components, build those specific projects
+	   and their dependencies, e.g. Cassius and CassiusCluaEngine for Lua
+	   support.
+	4. Using un-supported actions (e.g. codeblocks) is just that,
+	   un-supported! Reports and patches are of course, welcome.
+
