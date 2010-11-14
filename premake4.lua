@@ -6,7 +6,13 @@ dofile "opts.lua"
 solution "Cassius"
     configurations { "Development", "Release", "Debug" }
 
-    if os.get() == 'windows' then defines { "_WIN32" } end
+    if os.get() == 'windows' then defines { "_WIN32" } 
+    else
+        -- needed for some platforms, e.g. bsd; and preferable to have
+        -- under Linux and Solaris.
+        includedirs { "/usr/local/include" }
+        libdirs { "/usr/local/lib" }
+    end
 
     configuration "Development"
         flags { "ExtraWarnings" }
