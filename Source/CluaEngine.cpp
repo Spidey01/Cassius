@@ -55,6 +55,13 @@ namespace Cassius {
         stacksize++;
     }
 
+    void CluaEngine::Push(bool b)
+    {
+        lua_pushboolean(interp, b);
+        stacksize++;
+        nargs++;
+    }
+
     void CluaEngine::Push(char c)
     {
         lua_pushlstring(interp, &c, 1);

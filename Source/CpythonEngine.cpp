@@ -48,6 +48,11 @@ namespace Cassius {
         Py_DECREF(func);
     }
 
+    void CpythonEngine::Push(bool b)
+    {
+        PyList_Append(argslist, b ? Py_True : Py_False);
+    }
+
     void CpythonEngine::Push(char c)
     {
         PyList_Append(argslist, Py_BuildValue("c", c));

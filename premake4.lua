@@ -22,15 +22,10 @@ solution "Cassius"
         targetdir(getdistdir())
         make_Engine_templates() -- creates .tpp file for Engine class
         files { 
-            "Include/**.hpp", 
-            "Source/**.cpp",
-        }
-        excludes {
-            -- files specific to other projects
-            "Include/CluaEngine.hpp",
-            "Source/CluaEngine.cpp",
-            "Include/CpythonEngine.hpp",
-            "Source/CpythonEngine.cpp",
+            "Source/Engine.cpp",
+            "Source/SourceStream.cpp",
+            "Source/Manager.cpp",
+            "Source/SourceString.cpp"
         }
         links { "CxxPlugin" }
         includedirs { "Deps/cxx-plugin/include" }
@@ -41,7 +36,6 @@ solution "Cassius"
         objdir(getobjdir())
         targetdir(getdistdir())
         files {
-            "Include/CluaEngine.hpp",
             "Source/CluaEngine.cpp",
         }
         targetprefix("")
@@ -53,7 +47,6 @@ solution "Cassius"
         objdir(getobjdir())
         targetdir(getdistdir())
         files {
-            "Include/CpythonEngine.hpp",
             "Source/CpythonEngine.cpp",
         }
         targetprefix("")

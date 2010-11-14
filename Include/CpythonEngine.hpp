@@ -17,6 +17,7 @@ namespace Cassius {
         virtual void Run(Source &code);
         virtual void Call(void);
         virtual void PushFunction(const char *name);
+        virtual void Push(bool b);
         virtual void Push(char c);
         virtual void Push(int i);
         virtual void Push(double r);

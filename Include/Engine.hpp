@@ -20,6 +20,7 @@ namespace Cassius {
         virtual void Call(void) = 0;
 
         virtual void PushFunction(const char *name) = 0;
+        virtual void Push(bool b) = 0;
         virtual void Push(char c) = 0;
         virtual void Push(int i) = 0;
         virtual void Push(double r) = 0;
