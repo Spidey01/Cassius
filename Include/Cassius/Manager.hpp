@@ -60,6 +60,14 @@ namespace Cassius {
             CxxPlugin *cpython;
             newengine_fptr_t new_cpython;
             deleteengine_fptr_t delete_cpython;
+
+            CxxPlugin *spidermonkey;
+            newengine_fptr_t new_spidermonkey;
+            deleteengine_fptr_t delete_spidermonkey;
+
+            CxxPlugin *v8;
+            newengine_fptr_t new_v8;
+            deleteengine_fptr_t delete_v8;
         } backends;
     };
 }

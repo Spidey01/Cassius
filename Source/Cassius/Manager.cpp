@@ -14,6 +14,21 @@ namespace Cassius {
 
     Manager::Manager()
     {
+        backends.clua = 0;
+        backends.new_clua = 0;
+        backends.delete_clua = 0;
+
+        backends.cpython = 0;
+        backends.new_cpython = 0;
+        backends.delete_cpython = 0;
+
+        backends.spidermonkey = 0;
+        backends.new_spidermonkey = 0;
+        backends.delete_spidermonkey = 0;
+
+        backends.v8 = 0;
+        backends.new_v8 = 0;
+        backends.delete_v8 = 0;
     }
 
     Manager::~Manager()
@@ -31,6 +46,18 @@ namespace Cassius {
                 case LANG_PYTHON:
                     assert(backends.delete_cpython != 0);
                     delete_engine = backends.delete_cpython;
+                    break;
+                case LANG_ECMASCRIPT:
+                    switch ((*it)->impl) {
+                        case IMPL_SPIDERMONKEY:
+                            assert(backends.delete_spidermonkey != 0);
+                            delete_engine = backends.delete_spidermonkey;
+                            break;
+                        case IMPL_V8:
+                            assert(backends.delete_v8 != 0);
+                            delete_engine = backends.delete_v8;
+                            break;
+                    }
                     break;
                 default:
                     // NOTREACHED
@@ -73,11 +100,37 @@ namespace Cassius {
                     newengine = backends.new_cpython;
                     break;
                 }
+            case LANG_ECMASCRIPT:
+                switch (impl) {
+                    case IMPL_SPIDERMONKEY:
+                        {
+                            LOAD_ENGINE(spidermonkey,
+                                        "CassiusSpiderMonkeyEngine");
+                            newengine = backends.new_spidermonkey;
+                            break;
+                        }
+                    case IMPL_V8:
+                        {
+                            LOAD_ENGINE(v8, "CassiusV8Engine");
+                            newengine = backends.new_v8;
+                            break;
+                        }
+                    default:
+                        return 0; // wrong impl
+                }
+                break;
             default:
                 return 0;
         }
 
         Engine *e = newengine();
+        //
+        // Technically failure here should result in a bad_alloc being thrown.
+        // Between Windows, Users, and Typos, better to be safe than SIGSEGSRY.
+        //
+        if (!e) {
+            return 0;
+        }
         e->lang = lang;
         e->impl = impl;
         engines.push_back(e);

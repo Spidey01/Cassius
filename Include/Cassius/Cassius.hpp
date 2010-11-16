@@ -15,6 +15,7 @@ namespace Cassius {
     enum ScriptLanguages {
         LANG_LUA,
         LANG_PYTHON,
+        LANG_ECMASCRIPT,
     };
 
     /**
@@ -28,6 +29,8 @@ namespace Cassius {
         IMPL_DEFAULT,
         IMPL_CLUA,
         IMPL_CPYTHON,
+        IMPL_SPIDERMONKEY,
+        IMPL_V8,
     };
 }
 #endif
