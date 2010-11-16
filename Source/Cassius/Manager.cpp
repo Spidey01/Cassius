@@ -36,7 +36,7 @@ namespace Cassius {
         list<Engine *>::iterator it;
 
         for (it=engines.begin(); it != engines.end(); ++it) {
-            deleteengine_fptr_t delete_engine;
+            deleteengine_fptr_t delete_engine = 0;
 
             switch ((*it)->lang) {
                 case LANG_LUA:
@@ -58,15 +58,14 @@ namespace Cassius {
                             delete_engine = backends.delete_v8;
                             break;
                     }
-                    break;
                 default:
-                    // NOTREACHED
-                    throw runtime_error( "Cassius::Manager -> "
-                                              "Attempt to delete an unknown"
-                                              "type script engine.");
+                    // TODO some way of logging this and prevent the delete.
+                    // This will be NOTREACHED when valid enum values are given.
                     break;
             }
-            delete_engine(*it);
+            if (delete_engine) {
+                delete_engine(*it);
+            }
         }
     }
 
