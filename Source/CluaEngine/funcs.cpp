@@ -73,6 +73,10 @@ void toValueStack(lua_State *interp,
                   NativeFunction::argument_type &args,
                   int nargs)
 {
+    if (!lua_checkstack(interp, nargs)) {
+        die(interp, "error growing the Lua stack");
+    }
+
 #define ISTYPE(t) lua_is##t (interp, i)
 #define PUSHARG(f) do { args.push( lua_to##f (interp, i) ); } while (0)
     for (int i=1; i <= nargs; ++i) {
