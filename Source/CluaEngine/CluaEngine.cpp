@@ -12,6 +12,7 @@
 #include <Cassius/NativeFunction.hpp>
 #include <Cassius/Source.hpp>
 
+#include "lua.hpp"
 #include "funcs.hpp"
 
 using std::deque;

@@ -9,6 +9,8 @@
 #include <Cassius/CluaEngine.hpp>
 #include <Cassius/NativeFunction.hpp>
 
+#include "lua.hpp"
+
 using std::strcmp;
 
 using std::deque;

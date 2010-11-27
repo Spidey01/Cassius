@@ -4,6 +4,8 @@
 #include <Cassius/CluaEngine.hpp>
 #include <Cassius/NativeFunction.hpp>
 
+struct lua_State;
+
 // proxy function that wraps a registered function on the C side of the call.
 //
 int proxy(lua_State *interp);

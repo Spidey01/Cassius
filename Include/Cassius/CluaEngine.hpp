@@ -4,11 +4,7 @@
 #include <deque>
 #include <string>
 
-extern "C" {
-#   include <lua.hpp>
-#   include <lualib.h>
-#   include <lauxlib.h>
-}
+struct lua_State;
 
 #include "Engine.hpp"
 
