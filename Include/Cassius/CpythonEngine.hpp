@@ -6,7 +6,6 @@
 #include <Python.h>
 
 #include "Engine.hpp"
-#include "Source.hpp"
 
 namespace Cassius {
     class CASSIUS_API CpythonEngine : public Engine {
@@ -14,6 +13,7 @@ namespace Cassius {
         CpythonEngine();
         virtual ~CpythonEngine();
         virtual void Run(Source &code);
+        virtual bool Register(NativeFunction func);
         virtual void Call(void);
         virtual void PushFunction(const char *name);
         virtual void Push(bool b);

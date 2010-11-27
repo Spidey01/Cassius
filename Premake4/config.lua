@@ -21,5 +21,5 @@ configuration "Release"
     flags { "OptimizeSpeed" }
     defines { "NDEBUG" }
 configuration "Debug"
-    flags { "Symbols", }
+    flags { "Symbols" }
 

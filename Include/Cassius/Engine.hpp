@@ -1,17 +1,29 @@
 #ifndef CASSIUS_INCLUDE_ENGINE_HPP
 #define CASSIUS_INCLUDE_ENGINE_HPP
 
-#include <iostream>
+extern "C" {
+#   include <lua.hpp>
+#   include <lualib.h>
+#   include <lauxlib.h>
+}
 
 #include "Cassius.hpp"
-#include "Source.hpp"
+#include "NativeFunction.hpp"
 
 namespace Cassius {
+    class Source;
+
     class CASSIUS_API Engine {
       public:
-        Engine () {}
+        Engine() {}
         virtual ~Engine() {};
         virtual void Run(Source &code) = 0;
+
+        /**  Register a NativeFunction for use by scripts
+         *
+         * @see Cassius::NativeFunction
+         */
+        virtual bool Register(NativeFunction func) = 0;
 
         /** call func with empty parameter list */
         virtual void Call(const char *func);

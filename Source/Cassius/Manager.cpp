@@ -57,6 +57,8 @@ namespace Cassius {
                             assert(backends.delete_v8 != 0);
                             delete_engine = backends.delete_v8;
                             break;
+                        default:
+                            break;
                     }
                 default:
                     // TODO some way of logging this and prevent the delete.

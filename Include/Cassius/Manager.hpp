@@ -3,7 +3,6 @@
 
 #include <list>
 
-#include "Cassius.hpp"
 #include "Engine.hpp"
 
 class CxxPlugin;

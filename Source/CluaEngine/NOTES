@@ -1,0 +1,6 @@
+This basically works by using a class to manage a lua_State* and the associated stack.
+
+When the user Registers() a function, a wrapper function is made around Cassius.proxy() in Lua that invokes the proxy() function found in ./funcs.cpp.
+
+Data is passed between that proxy() call back and the instance of CluaEngine by passing a pointer via the Lua registry. Read the comments in the code for the default constructor.
+

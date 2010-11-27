@@ -27,6 +27,12 @@ namespace Cassius {
         PyRun_SimpleString(code.get().c_str());
     }
 
+    bool CpythonEngine::Register(NativeFunction func)
+    {
+        // not implemented yet
+        return false;
+    }
+
     void CpythonEngine::Call(void)
     {
         PyObject *func = PySequence_GetItem(argslist, 0);

@@ -1,6 +1,9 @@
 #ifndef CASSIUS_INCLUDE_CLUAENGINE_HPP
 #define CASSIUS_INCLUDE_CLUAENGINE_HPP
 
+#include <deque>
+#include <string>
+
 extern "C" {
 #   include <lua.hpp>
 #   include <lualib.h>
@@ -8,8 +11,6 @@ extern "C" {
 }
 
 #include "Engine.hpp"
-#include "Source.hpp"
-
 
 namespace Cassius {
     class CASSIUS_API CluaEngine : public Engine {
@@ -18,6 +19,7 @@ namespace Cassius {
         virtual ~CluaEngine();
         virtual void Run(Source &code);
         virtual void Call(void);
+        virtual bool Register(NativeFunction func);
         virtual void PushFunction(const char *name);
         virtual void Push(bool b);
         virtual void Push(char c);
@@ -27,16 +29,12 @@ namespace Cassius {
         virtual void Pop(size_t n=1);
         virtual size_t StackSize();
 
-        /* Call() template code shared with class Engine */
-        #include "Engine.tpp"
-
       private:
         CluaEngine(const CluaEngine &other);
         const CluaEngine &operator=(const CluaEngine &other);
 
         lua_State *interp;
-        size_t stacksize;
-        int nargs;
+        std::deque<NativeFunction> functions;
     };
 }
 
