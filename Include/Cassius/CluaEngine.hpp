@@ -17,7 +17,7 @@ namespace Cassius {
       public:
         CluaEngine();
         virtual ~CluaEngine();
-        virtual void Run(Source &code);
+        virtual void Evaluate(Source &code);
         virtual void Call(void);
         virtual bool Register(NativeFunction func);
         virtual void PushFunction(const char *name);

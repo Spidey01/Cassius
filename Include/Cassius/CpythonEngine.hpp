@@ -12,7 +12,7 @@ namespace Cassius {
       public:
         CpythonEngine();
         virtual ~CpythonEngine();
-        virtual void Run(Source &code);
+        virtual void Evaluate(Source &code);
         virtual bool Register(NativeFunction func);
         virtual void Call(void);
         virtual void PushFunction(const char *name);

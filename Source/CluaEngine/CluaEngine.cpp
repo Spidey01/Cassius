@@ -62,7 +62,7 @@ namespace Cassius {
         lua_close(interp);
     }
 
-    void CluaEngine::Run(Source &code)
+    void CluaEngine::Evaluate(Source &code)
     {
         if (luaL_dostring(interp, code.get().c_str()) != 0) {
             // TODO throw an error

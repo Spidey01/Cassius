@@ -17,7 +17,7 @@ namespace Cassius {
       public:
         Engine() {}
         virtual ~Engine() {};
-        virtual void Run(Source &code) = 0;
+        virtual void Evaluate(Source &code) = 0;
 
         /**  Register a NativeFunction for use by scripts
          *

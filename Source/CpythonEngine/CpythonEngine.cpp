@@ -22,7 +22,7 @@ namespace Cassius {
         Py_Finalize();
     }
 
-    void CpythonEngine::Run(Source &code)
+    void CpythonEngine::Evaluate(Source &code)
     {
         PyRun_SimpleString(code.get().c_str());
     }
