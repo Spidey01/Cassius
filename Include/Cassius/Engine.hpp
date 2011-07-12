@@ -1,12 +1,6 @@
 #ifndef CASSIUS_INCLUDE_ENGINE_HPP
 #define CASSIUS_INCLUDE_ENGINE_HPP
 
-extern "C" {
-#   include <lua.hpp>
-#   include <lualib.h>
-#   include <lauxlib.h>
-}
-
 #include "Cassius.hpp"
 #include "NativeFunction.hpp"
 
