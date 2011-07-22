@@ -7,4 +7,5 @@ solution "Cassius"
     dofile "Premake4/config.lua"
     include "Deps"
     include "Source"
+    include "Tests"
 
