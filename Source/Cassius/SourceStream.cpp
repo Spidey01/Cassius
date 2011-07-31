@@ -14,6 +14,7 @@ namespace Cassius {
         while (stream.good()) {
             this->code.sputc(stream.get());
         }
+        // this should deal with errors by throwing
     }
 
     SourceStream::~SourceStream()

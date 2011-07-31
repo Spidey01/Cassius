@@ -44,7 +44,9 @@ Cassius::NativeFunction getRealFunctor(lua_State *interp, const char *realName);
 // Helper to dump the current lua stack to standard out.
 // This does nothing if NDEBUG is defined.
 //
-void dumpStack(lua_State *interp);
+// @returns # of stack frames counted
+//
+int dumpStack(lua_State *interp);
 
 // Helper to forcefully quit the applicat yet respect lua_error() behaviour.
 // This calls abort to ensure that the program terminates.

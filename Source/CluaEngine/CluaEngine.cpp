@@ -11,9 +11,11 @@
 #include <Cassius/CluaEngine.hpp>
 #include <Cassius/NativeFunction.hpp>
 #include <Cassius/Source.hpp>
+#include <Cassius/SourceFile.hpp>
 
 #include "lua.hpp"
 #include "funcs.hpp"
+#include "debug.hpp"
 
 using std::deque;
 using std::invalid_argument;
@@ -47,7 +49,7 @@ namespace Cassius {
 
         // clear the stack
         lua_settop(interp, 0);
-        dumpStack(interp);
+        assert(dumpStack(interp) == 0);
 
         // store a pointer to our mapping table in the Lua registery
         // with the address of the current interpretor as the key.
@@ -68,6 +70,21 @@ namespace Cassius {
         if (luaL_dostring(interp, code.get().c_str()) != 0) {
             // TODO throw an error
         }
+
+        // for now we ignore return values (oi) and just clear the stack.
+        // we can pop the stack empty in order to get the return values
+        //
+        lua_pop(interp, lua_gettop(interp));
+    }
+
+    // needed because the equalvialent code with luaL_dostring and a
+    // SourceStream does not work. -- 2011-07-31, Terry P.
+    //
+    void CluaEngine::Evaluate(SourceFile &code)
+    {
+        if (luaL_dofile(interp, code.get().c_str())) {
+            // TODO throw an error
+        }
     }
 
     bool CluaEngine::Register(NativeFunction func)
@@ -76,6 +93,9 @@ namespace Cassius {
         if (name == NULL) return false;
 
         // Create a wrapper function that calls Cassius.proxy()
+        //
+        // function <name>(...) return Cassius.proxy(<name>, unpack(arg)) end
+        //
         string s("function ");
         s.append(name);
         s.append("(...) return Cassius");
@@ -93,8 +113,7 @@ namespace Cassius {
 
     void CluaEngine::Call(void)
     {
-        dumpStack(interp);
-        lua_call(interp, StackSize() - 1, 0);
+        WITH_STACKDUMP(lua_call(interp, StackSize() - 1, 0));
     }
 
     void CluaEngine::PushFunction(const char *func)
@@ -103,7 +122,7 @@ namespace Cassius {
 
         // simple case, func = name of a global function
         if (p == NULL) {
-            lua_getfield(interp, LUA_GLOBALSINDEX, func);
+            lua_getglobal(interp, func);
             return;
         }
 

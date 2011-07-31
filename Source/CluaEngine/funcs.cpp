@@ -30,16 +30,23 @@ void die(lua_State *interp, const char *e)
 #ifndef NDEBUG
 #include <iostream>
 #endif
-void dumpStack(lua_State *interp)
+int dumpStack(lua_State *interp)
 {
+    // This should be modified to dump to a logging stream the user
+    // has supplied, not to cout only when NDEBUG is set.
+    //
 #ifndef NDEBUG
     std::cout << "frame count " << lua_gettop(interp) << std::endl;
-    for (int i=lua_gettop(interp); i > 0; --i) {
+    int rv;
+    for (int i = rv = lua_gettop(interp); i > 0; --i) {
         std::cout << "stack frame " << i << " is" 
                   << lua_typename(interp, lua_type(interp, i))
                   << std::endl;
     }
     std::cout << "end of frames" << std::endl;
+    return rv;
+#else
+    return lua_gettop(interp);
 #endif
 }
 

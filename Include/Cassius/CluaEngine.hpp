@@ -9,11 +9,13 @@ struct lua_State;
 #include "Engine.hpp"
 
 namespace Cassius {
+
     class CASSIUS_API CluaEngine : public Engine {
       public:
         CluaEngine();
         virtual ~CluaEngine();
         virtual void Evaluate(Source &code);
+        virtual void Evaluate(SourceFile &code);
         virtual void Call(void);
         virtual bool Register(NativeFunction func);
         virtual void PushFunction(const char *name);

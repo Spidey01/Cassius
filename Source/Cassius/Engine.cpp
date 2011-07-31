@@ -1,4 +1,8 @@
 #include <Cassius/Engine.hpp>
+#include <Cassius/SourceStream.hpp>
+#include <Cassius/SourceFile.hpp>
+
+#include <fstream>
 
 namespace Cassius {
 
@@ -6,6 +10,18 @@ namespace Cassius {
     {
         PushFunction(func);
         Call();
+    }
+
+    void Engine::Evaluate(SourceFile &code)
+    {
+        std::ifstream f("Tests/test.lua");
+        if (f.fail()) {
+            // TODO handle errors
+            return;
+        }
+
+        SourceStream ss(f);
+        Evaluate(ss);
     }
 }
 

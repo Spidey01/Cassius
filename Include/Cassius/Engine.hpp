@@ -6,12 +6,19 @@
 
 namespace Cassius {
     class Source;
+    class SourceFile;
 
     class CASSIUS_API Engine {
       public:
         Engine() {}
         virtual ~Engine() {};
         virtual void Evaluate(Source &code) = 0;
+
+        /** Overload of Evaluate for Engine's that need different behaviour based on source being a file.
+         *
+         * The default implementation creates a SourceStream.
+         */
+        virtual void Evaluate(SourceFile &code);
 
         /**  Register a NativeFunction for use by scripts
          *
