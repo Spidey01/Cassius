@@ -3,6 +3,7 @@
 #include <stdexcept>
 
 #include <Cassius/CpythonEngine.hpp>
+#include <Cassius/Source.hpp>
 
 namespace Cassius {
 
@@ -12,8 +13,12 @@ namespace Cassius {
         Py_Initialize();
 
         if ((argslist = (PyObject *)PyList_New(0)) == 0) {
-            throw std::runtime_error("CpythonEngine -> unable to create argument vector");
+            throw std::runtime_error("Unable to create argument vector");
         }
+        if (PyImport_AddModule("Cassius") == NULL) {
+            throw std::runtime_error("Unable to import Cassius module");
+        }
+            
     }
 
     CpythonEngine::~CpythonEngine()
