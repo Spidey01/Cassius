@@ -1,7 +1,6 @@
 #ifndef CASSIUS_INCLUDE_NATIVEFUNCTION_HPP
 #define CASSIUS_INCLUDE_NATIVEFUNCTION_HPP
 
-#include <functional>
 #include <stack>
 
 #include "Value.hpp"
@@ -17,14 +16,16 @@ namespace Cassius {
      * @see Engine::Register
      */
     class CASSIUS_API NativeFunction
-        : public std::unary_function< std::stack<Value>, std::stack<Value> >
     {
       public:
+        /// typedefs to match the C++03 std::unary_function interface
+        typedef ValueList result_type;
+        typedef ValueList argument_type;
 
         NativeFunction();
-        NativeFunction(const char *name, result_type (*funcptr)(argument_type));
+        NativeFunction(const char *name, ValueList (*funcptr)(ValueList));
 
-        result_type operator()(argument_type values);
+        ValueList operator()(ValueList values);
 
         /* Returns the name associated with the function or NULL if invalid.
          */
@@ -32,7 +33,7 @@ namespace Cassius {
 
       private:
         const char *name_;
-        result_type (*func)(argument_type);
+        ValueList (*func)(ValueList);
     };
 }
 #endif

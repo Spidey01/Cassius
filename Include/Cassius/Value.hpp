@@ -3,6 +3,8 @@
 
 #include "Cassius.hpp"
 
+#include <stack>
+
 namespace Cassius {
     /** Helper class representing a handle to a plain old C++ value.
      *
@@ -12,7 +14,7 @@ namespace Cassius {
      *
      * Note bene: that while Value::values contains members for accessing the
      * data as a raw pointer type and as a classic "C-string", this class
-     * currently does no memory management of its own on your behave. This is
+     * currently does no memory management of its own on your behalf. This is
      * delegated to the client. In lay mens terms, do your own string copying.
      *
      * @see Engine::Register
@@ -47,6 +49,9 @@ namespace Cassius {
         mutable types myType;
         mutable values myValue;
     };
+
+
+    typedef std::stack<Value> ValueList;
 }
 #endif
 
