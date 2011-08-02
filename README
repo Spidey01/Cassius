@@ -1,9 +1,17 @@
-Cassius is a script engine designed to make it easier to embed scripting languages in C++ programs. Instead of directly embedding the language using it's own API, you embedd Cassius and use its API. This allows a fairly common level of functionality to be supported across several languages, and thus you can embed several different scripting languages if desired.
+Cassius is a script engine designed to make it easier to embed scripting
+languages in C++ programs. Instead of directly embedding the language using
+it's own API, you embed Cassius and use its API. This allows a fairly common
+level of functionality to be supported across several languages, and thus you
+can embed several different scripting languages if desired.
 
-For the most part, whether you are embedding SpiderMonkey, V8, Python, Lua, etc, your code should still compile. Cassius takes care of as many details as it can. Of course, if you load a Python back end and try feeding it Lua, that's your problem :-P.
+For the most part, whether you are embedding SpiderMonkey, V8, Python, Lua,
+etc, your code should still compile. Cassius takes care of as many details as
+it can. Of course, if you load a Python back end and try feeding it Lua code,
+that's your problem :-P.
 
 
 General Dependencies:
+
 	C++ Compiler
 		The GNU and Microsoft compilers are supported and tested.
 		If one of backends supported by Cassius requires a different
@@ -20,21 +28,21 @@ Specific Dependencies:
 	These dependencies are only needed if you wish to build the relevant components of Cassius.
 
 	Lua <http://www.lua.org/>
-		Tested against Lua 5.1; other versions probably work fine.
+		Tested against Lua 5.1; other 5.x versions probably work fine.
 
 	Python <http://www.python.org/>
-		Currently this is only supported on GNU Make builds and requires python-config in $PATH.
+		Barely implemented.
 
 Building Instructions:
 
   0. Make sure you have a suitable copy of premake4.
   1. Check your compiler.
   	0. Windows builds should use Visual C++.
-  		1.0.0. tested with 2008 Express Edition
+  		1.0.0. tested with 2008 Express Edition		// 2011-08-01 I don't have this version anymore, sorry.
   		1.0.1. tested with 2010 Express Edition
   	1. Unix builds should use GNU C++.
   		1.1.0. tested with recent versions of GCC 4 on Linux.
-  	2. C++0x features require a suitable compiler.
+  	2. C++0x features require a suitable compiler and should be OPTIONAL.
   2. Make sure you have dependencies sorted out.
 	0. If using own dependencies, the source code should be installed into
 	   Deps/{project}. Where {project} is the name of the project listed in
