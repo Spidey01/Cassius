@@ -23,5 +23,10 @@ namespace Cassius {
         SourceStream ss(f);
         Evaluate(ss);
     }
+
+    void Engine::PushFunction(const char *name)
+    {
+        PushFunction(name, 0, 0);
+    }
 }
 

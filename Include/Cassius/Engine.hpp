@@ -3,6 +3,7 @@
 
 #include "Cassius.hpp"
 #include "NativeFunction.hpp"
+#include "Value.hpp"
 
 namespace Cassius {
     class Source;
@@ -30,9 +31,22 @@ namespace Cassius {
         virtual void Call(const char *func);
 
         /** call using the current stack state */
-        virtual void Call(void) = 0;
+        virtual ValueList Call(void) = 0;
 
-        virtual void PushFunction(const char *name) = 0;
+        /** Push a function taking 0 parameters and returning 0 values
+         *
+         * @param name The name of the script function to call.
+         */
+        virtual void PushFunction(const char *name);
+
+        /** Pushes a function on the call stack
+         *
+         * @param name The name of the script function to call.
+         * @param nrets # of return values; 0 = void/null/nil/etc
+         * @param nargs # of paramaters
+         */
+        virtual void PushFunction(const char *name, int nrets, int nargs) = 0;
+
         virtual void Push(bool b) = 0;
         virtual void Push(char c) = 0;
         virtual void Push(int i) = 0;
@@ -47,6 +61,7 @@ namespace Cassius {
 
         /** Current size of the stack */
         virtual size_t StackSize() = 0;
+
 
         ScriptLanguages lang;
         Backends impl;

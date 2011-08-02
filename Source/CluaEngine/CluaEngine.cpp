@@ -24,6 +24,35 @@ using std::range_error;
 using std::runtime_error;
 using std::string;
 
+// Helper that slurps count values off the stack and into a ValueList
+static Cassius::ValueList slurpStack(lua_State *interp, int count)
+{
+    Cassius::ValueList p;
+    using Cassius::Value;
+
+    for (int i=0; i < count; ++i) {
+        Value v;
+        int top = lua_gettop(interp);
+        if (lua_isboolean(interp, top)) {
+            p.push(Value(lua_toboolean(interp, top)));
+        }
+        else if (lua_isstring(interp, top)) {
+            p.push(Value(lua_tostring(interp, top)));
+        }
+        else if (lua_isnumber(interp, top)) {
+            //
+            // No real way to know whether we should get it as a double or an
+            // int, so delegate to the caller.
+            //
+            p.push(Value(static_cast<double>(lua_tonumber(interp, top))));
+            //p.push(Value(static_cast<int>(lua_tointeger(interp, top))));
+        }
+    }
+    lua_pop(interp, count);
+
+    return p;
+}
+
 namespace Cassius {
 
     CluaEngine::CluaEngine()
@@ -111,13 +140,22 @@ namespace Cassius {
         return true;
     }
 
-    void CluaEngine::Call(void)
+    ValueList CluaEngine::Call(void)
     {
-        WITH_STACKDUMP(lua_call(interp, StackSize() - 1, 0));
+        if (StackSize()-1 != callInfo.nargs) {
+            // how should we handle wrong # of arguments? IMHO round to the
+            // actual and let Lua error handling settle the rest.
+        }
+        WITH_STACKDUMP(lua_call(interp, StackSize() - 1, callInfo.nrets));
+        return slurpStack(interp, callInfo.nrets);
     }
 
-    void CluaEngine::PushFunction(const char *func)
+    void CluaEngine::PushFunction(const char *func, int nrets, int nargs)
     {
+
+        callInfo.nrets = nrets;
+        callInfo.nargs = nargs;
+
         const char *p = std::strchr(func, '.');
 
         // simple case, func = name of a global function
@@ -172,6 +210,7 @@ namespace Cassius {
     {
         return lua_gettop(interp);
     }
+
 }
 
 extern "C" Cassius::Engine *new_clua(void)

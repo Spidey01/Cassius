@@ -36,7 +36,7 @@ function make_Engine_templates()
         while nargs > 0 do
             s = s .. "        template <"
                   .. commafiy(nargs, "typename Arg._t")
-                  .. "> void Call(const char *func, "
+                  .. "> ValueList Call(const char *func, "
                   .. commafiy(nargs, "Arg._t arg.")
                   .. ")\n"
                   .. "        {\n"
@@ -44,7 +44,7 @@ function make_Engine_templates()
             for i = 1, nargs do
                 s = s .. "            Push(arg" .. i .. ");\n"
             end
-            s = s .. "            Call();\n"
+            s = s .. "            return Call();\n"
                   .. "        }\n"
             nargs = nargs - 1
         end

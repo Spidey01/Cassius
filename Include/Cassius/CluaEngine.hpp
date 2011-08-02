@@ -16,9 +16,9 @@ namespace Cassius {
         virtual ~CluaEngine();
         virtual void Evaluate(Source &code);
         virtual void Evaluate(SourceFile &code);
-        virtual void Call(void);
+        virtual ValueList Call(void);
         virtual bool Register(NativeFunction func);
-        virtual void PushFunction(const char *name);
+        virtual void PushFunction(const char *name, int nrets, int nargs);
         virtual void Push(bool b);
         virtual void Push(char c);
         virtual void Push(int i);
@@ -33,6 +33,11 @@ namespace Cassius {
 
         lua_State *interp;
         std::deque<NativeFunction> functions;
+
+        struct {
+            int nargs;
+            int nrets;
+        } callInfo;
     };
 }
 
