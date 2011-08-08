@@ -6,9 +6,9 @@
 
 namespace Cassius {
 
-    void Engine::Call(const char *func)
+    void Engine::Call(const char *func, int nrets)
     {
-        PushFunction(func);
+        PushFunction(func, nrets, 0);
         Call();
     }
 

@@ -28,7 +28,7 @@ namespace Cassius {
         virtual bool Register(NativeFunction func) = 0;
 
         /** call func with empty parameter list */
-        virtual void Call(const char *func);
+        virtual void Call(const char *func, int nrets);
 
         /** call using the current stack state */
         virtual ValueList Call(void) = 0;

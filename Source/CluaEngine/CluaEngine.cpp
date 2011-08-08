@@ -1,6 +1,8 @@
+#include <iostream>
 
 #include <Cassius/Cassius.hpp>
 
+#include <sstream>
 #include <stdexcept>
 #include <string>
 
@@ -23,6 +25,7 @@ using std::logic_error;
 using std::range_error;
 using std::runtime_error;
 using std::string;
+using std::stringstream;
 
 // Helper that slurps count values off the stack and into a ValueList
 static Cassius::ValueList slurpStack(lua_State *interp, int count)
@@ -30,22 +33,53 @@ static Cassius::ValueList slurpStack(lua_State *interp, int count)
     Cassius::ValueList p;
     using Cassius::Value;
 
-    for (int i=0; i < count; ++i) {
-        Value v;
-        int top = lua_gettop(interp);
-        if (lua_isboolean(interp, top)) {
-            p.push(Value(lua_toboolean(interp, top)));
-        }
-        else if (lua_isstring(interp, top)) {
-            p.push(Value(lua_tostring(interp, top)));
-        }
-        else if (lua_isnumber(interp, top)) {
-            //
-            // No real way to know whether we should get it as a double or an
-            // int, so delegate to the caller.
-            //
-            p.push(Value(static_cast<double>(lua_tonumber(interp, top))));
-            //p.push(Value(static_cast<int>(lua_tointeger(interp, top))));
+    for (int i=0; i < count; ++i) { Value v; int top = lua_gettop(interp);
+        switch (lua_type(interp, top)) {
+            case LUA_TNONE: {
+                // probably an internal error
+                stringstream m;
+                m << "invalid stack index: "
+                  << "lua_type at index "
+                  << i << " "
+                  << "is LUA_TNONE";
+                throw std::runtime_error(m.str());
+            }
+            // case LUA_TNIL: { //where in the switch I want it to be after it is supported by Value
+                // break;
+            // }
+            case LUA_TNUMBER: {
+                //
+                // No real way to know whether we should get it as a double or an
+                // int, so delegate to the caller and C++ type stuff.
+                //
+                p.push(Value(static_cast<double>(lua_tonumber(interp, top))));
+                //p.push(Value(static_cast<int>(lua_tointeger(interp, top))));
+                break;
+            }
+            case LUA_TBOOLEAN: {
+                p.push(Value(lua_toboolean(interp, top)));
+                break;
+            }
+            case LUA_TSTRING: {
+                p.push(Value(lua_tostring(interp, top)));
+                break;
+            }
+            case LUA_TNIL: //remove me
+            case LUA_TTABLE:
+            case LUA_TFUNCTION:
+            case LUA_TUSERDATA:
+            case LUA_TTHREAD: 
+            case LUA_TLIGHTUSERDATA:
+            default: {
+                stringstream m;
+                
+                m << "CluaEngine does not YET support converting "
+                  << "return values of Lua type "
+                  << lua_typename(interp, i)
+                  << " to a C++ type";
+
+                throw invalid_argument(m.str());
+            }
         }
     }
     lua_pop(interp, count);
