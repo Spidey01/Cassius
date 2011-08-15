@@ -32,4 +32,8 @@ if _OPTIONS["with-lua"] == "own" then
             "lua/src/loadlib.c", "lua/src/linit.c"
         }
         includedirs { "lua/src" }
+
+        -- turn off warnings in MSVC
+        configuration "vs20*"
+            defines { '_CRT_SECURE_NO_WARNINGS' }
 end
