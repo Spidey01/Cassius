@@ -57,10 +57,10 @@ namespace Cassius {
          *
          * @param n number of frames to pop, default is 1
          */
-        virtual void Pop(size_t n=1) = 0;
+        virtual void Pop(std::size_t n=1) = 0;
 
         /** Current size of the stack */
-        virtual size_t StackSize() = 0;
+        virtual std::size_t StackSize() = 0;
 
 
         ScriptLanguages lang;

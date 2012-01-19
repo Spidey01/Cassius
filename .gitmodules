@@ -1,0 +1,3 @@
+[submodule "Deps/cxx-plugin"]
+	path = Deps/cxx-plugin
+	url = https://github.com/Spidey01/cxx-plugin.git

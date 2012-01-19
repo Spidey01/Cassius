@@ -7,6 +7,8 @@
 #	define CASSIUS_API /* sane */
 #endif
 
+#include <cstddef>
+
 namespace Cassius {
 
     /**

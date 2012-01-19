@@ -12,6 +12,9 @@ project "CxxPlugin"
         "cxx-plugin/src/**.cxx"
     }
     includedirs { "cxx-plugin/include" }
+    -- needed for 64-bit Linux build.
+    configuration "gcc"
+	buildoptions("-fPIC")
 
 if _OPTIONS["with-lua"] == "own" then
     project "lua"
