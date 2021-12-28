@@ -15,6 +15,8 @@ add_cassius_test(Value_real)
 add_cassius_test(Value_string)
 add_cassius_test(Value_List)
 
+add_cassius_test(Source_String)
+
 if (LUA_FOUND)
     add_cassius_test(lua_eval)
 endif (LUA_FOUND)

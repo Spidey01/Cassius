@@ -23,6 +23,7 @@ void run_test(const char* name);
 #include <iostream>
 #include <stdexcept>
 #include <string>
+#include <utility>
 
 using std::cout;
 using std::endl;
@@ -30,6 +31,13 @@ using std::exception;
 using std::logic_error;
 using std::runtime_error;
 using std::string;
+
+
+#if __cplusplus >= 201100 || (defined(_MSVC_LANG) && _MSVC_LANG >= 201100)
+#define TESTS_USE_CXX11 1
+#else
+#define TESTS_USE_CXX11 0
+#endif
 
 /** Exception to throw if run_test fails. */
 class TestFailure : public std::exception
@@ -43,10 +51,10 @@ class TestFailure : public std::exception
     {
     }
 
-#if __cplusplus < 201100
-    const char* what() const throw()
-#else
+#if TESTS_USE_CXX11
     const char* what() const noexcept
+#else
+    const char* what() const throw()
 #endif
     {
         return msg.c_str();
