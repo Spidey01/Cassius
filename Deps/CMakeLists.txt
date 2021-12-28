@@ -7,3 +7,5 @@ target_include_directories(CxxPlugin PUBLIC cxx-plugin/include)
 if (UNIX)
     target_link_libraries(CxxPlugin -ldl)
 endif()
+
+set_property(TARGET CxxPlugin PROPERTY POSITION_INDEPENDENT_CODE ON)
