@@ -63,6 +63,7 @@ if (LUA_FOUND)
     add_library(CassiusCluaEngine MODULE Source/CluaEngine/CluaEngine.cpp Source/CluaEngine/funcs.cpp)
     target_link_libraries(CassiusCluaEngine PRIVATE Cassius ${LUA_LIBRARIES})
     target_include_directories(CassiusCluaEngine PRIVATE ${LUA_INCLUDE_DIR})
+    set_target_properties(CassiusCluaEngine PROPERTIES PREFIX "")
     install(TARGETS CassiusCluaEngine
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
@@ -72,6 +73,7 @@ if (Python_FOUND)
     # Not tested yet.
     add_library(CassiusPythonEngine MODULE Source/CPythonEngine/CPythonEngine.cpp)
     target_link_libraries(CassiusPythonEngine PRIVATE Cassius Python::Python)
+    set_target_properties(CassiusPythonEngine PROPERTIES PREFIX "")
     install(TARGETS CassiusPythonEngine
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
