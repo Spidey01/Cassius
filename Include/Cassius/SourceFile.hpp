@@ -1,5 +1,7 @@
 #ifndef CASSIUS_INCLUDE_SOURCEFILE_HPP
 #define CASSIUS_INCLUDE_SOURCEFILE_HPP
+// SPDX-License-Identifier: ISC
+// Copyright 2011, Terry M. Poulin.
 
 #include <string>
 

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: ISC
+// Copyright 2010, Terry M. Poulin.
 
 #include <iostream>
 #include <istream>

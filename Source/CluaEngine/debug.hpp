@@ -1,5 +1,7 @@
 #ifndef CASSIUS_SOURCE_CLUAENGINE_DEBUG_HPP
 #define CASSIUS_SOURCE_CLUAENGINE_DEBUG_HPP
+// SPDX-License-Identifier: ISC
+// Copyright 2010, Terry M. Poulin.
 
 #ifndef NDEBUG
 

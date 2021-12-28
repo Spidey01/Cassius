@@ -1,5 +1,7 @@
 #ifndef CASSIUS_SOURCE_CLUAENGINE_FUNCS_HPP
 #define CASSIUS_SOURCE_CLUAENGINE_FUNCS_HPP
+// SPDX-License-Identifier: ISC
+// Copyright 2010, Terry M. Poulin.
 
 #include <Cassius/CluaEngine.hpp>
 #include <Cassius/NativeFunction.hpp>

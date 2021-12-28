@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: ISC
+// Copyright 2010, Terry M. Poulin.
+
 #include <Cassius/Engine.hpp>
 #include <Cassius/SourceStream.hpp>
 #include <Cassius/SourceFile.hpp>

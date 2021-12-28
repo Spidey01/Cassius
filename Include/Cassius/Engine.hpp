@@ -1,5 +1,7 @@
 #ifndef CASSIUS_INCLUDE_ENGINE_HPP
 #define CASSIUS_INCLUDE_ENGINE_HPP
+// SPDX-License-Identifier: ISC
+// Copyright 2010, Terry M. Poulin.
 
 #include "Cassius.hpp"
 #include "NativeFunction.hpp"

@@ -1,7 +1,7 @@
 #ifndef CASSIUS_TESTING_COMMON_HPP
 #define CASSIUS_TESTING_COMMON_HPP
 // SPDX-License-Identifier: ISC
-/* Copyright 2021, the Cassius authors. */
+// Copyright 2021, Terry M. Poulin.
 
 /*
  * Include this in each test program and link using Common.cpp to provide the main().

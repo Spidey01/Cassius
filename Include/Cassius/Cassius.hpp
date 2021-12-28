@@ -1,5 +1,7 @@
 #ifndef CASSIUS_INCLUDE_CASSIUS_HPP
 #define CASSIUS_INCLUDE_CASSIUS_HPP
+// SPDX-License-Identifier: ISC
+// Copyright 2010, Terry M. Poulin.
 
 #if defined(_WIN32) || defined(__WIN64)
 #	define CASSIUS_API __declspec(dllexport)

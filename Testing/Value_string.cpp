@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: ISC
-/* Copyright 2021, the Cassius authors. */
+// Copyright 2021, Terry M. Poulin.
 /*
  * Tests Cassisus::Value for strings.
  */

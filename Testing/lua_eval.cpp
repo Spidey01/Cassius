@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: ISC
+// Copyright 2021, Terry M. Poulin.
+
 #include "./Common.hpp"
 
 #include <Cassius/Manager.hpp>

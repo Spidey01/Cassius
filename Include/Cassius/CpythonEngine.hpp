@@ -1,5 +1,7 @@
 #ifndef CASSIUS_INCLUDE_CPYTHONENGINE_HPP
 #define CASSIUS_INCLUDE_CPYTHONENGINE_HPP
+// SPDX-License-Identifier: ISC
+// Copyright 2010, Terry M. Poulin.
 
 // Meta header for Pythons C API, it's childern should provide the extern "C"'s we need.
 // The docs say it should come before all standard headers.
