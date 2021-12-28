@@ -30,7 +30,7 @@ namespace Cassius
 
         virtual ~SourceString();
 
-        virtual std::string get();
+        virtual std::string get() const;
 
       private:
         std::string mString;

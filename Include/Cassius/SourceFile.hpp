@@ -16,7 +16,7 @@ namespace Cassius {
         virtual ~SourceFile()
         {}
 
-        virtual std::string get()
+        virtual std::string get() const
         {
             return std::string(source);
         }

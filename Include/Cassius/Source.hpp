@@ -11,8 +11,7 @@ namespace Cassius {
      */
     class CASSIUS_API Source {
       public:
-        virtual ~Source() {};
-        virtual std::string get() = 0;
+        virtual std::string get() const = 0;
     };
 }
 

@@ -21,7 +21,7 @@ namespace Cassius {
     {
     }
 
-    string SourceStream::get()
+    string SourceStream::get() const
     {
         return code.str();
     }

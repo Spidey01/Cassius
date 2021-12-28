@@ -14,7 +14,7 @@ namespace Cassius {
       public:
         SourceStream(std::istream &stream);
         virtual ~SourceStream();
-        virtual std::string get();
+        virtual std::string get() const;
 
       private:
         std::stringbuf code;

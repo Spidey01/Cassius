@@ -26,7 +26,7 @@ namespace Cassius
     {
     }
 
-    string SourceString::get()
+    string SourceString::get() const
     {
         return mString;
     }
