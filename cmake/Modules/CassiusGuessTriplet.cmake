@@ -1,0 +1,8 @@
+function(CassiusGuessTriplet outvar)
+    if (DEFINED VCPKG_TARGET_TRIPLET)
+        set(triplet ${VCPKG_TARGET_TRIPLET})
+    else()
+        string(TOLOWER "${CMAKE_CXX_COMPILER_ARCHITECTURE_ID}-${CMAKE_SYSTEM_NAME}" triplet)
+    endif()
+    set(${outvar} ${triplet} CACHE STRING "CassiusGuessTriplet() result.")
+endfunction(CassiusGuessTriplet)

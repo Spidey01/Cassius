@@ -1,0 +1,24 @@
+# vim: set filetype=cmake tabstop=4 shiftwidth=4 expandtab :
+# based on https://gitlab.kitware.com/cmake/community/-/wikis/doc/tutorials/How-to-create-a-ProjectConfig.cmake-file
+
+@PACKAGE_INIT@
+
+# - Config file for the Cassius package
+# It defines the following variables
+#  Cassius_INCLUDE_DIRS - include directories for Cassius
+#  Cassius_LIBRARIES    - libraries to link against
+
+# Compute paths
+get_filename_component(Cassius_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+set(Cassius_INCLUDE_DIRS "@CONF_INCLUDE_DIRS@")
+
+# Our library dependencies (contains definitions for IMPORTED targets)
+if(NOT TARGET Cassius AND NOT Cassius_BINARY_DIR)
+  include(CMakeFindDependencyMacro)
+  find_dependency(Lua)
+  find_dependency(Python COMPONENTS Development)
+  include("${Cassius_CMAKE_DIR}/CassiusTargets.cmake")
+endif()
+
+# These are IMPORTED targets created by CassiusTargets.cmake
+set(Cassius_LIBRARIES Cassius)
