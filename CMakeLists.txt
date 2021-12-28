@@ -6,6 +6,7 @@ project(Cassius
     LANGUAGES CXX)
 
 option(BUILD_SHARED_LIBS "Build libs as shared." ON)
+option(BUILD_TESTING "Enable CTest support." ON)
 option(BUILD_PACKAGE "Enable CPack support." ON)
 option(ENABLE_LUA "Enable Lua support if found." ON)
 option(ENABLE_PYTHON "Enable Python support if found." ON)
@@ -101,6 +102,11 @@ install(FILES
     Include/Cassius/SourceString.hpp
     Include/Cassius/Value.hpp
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME})
+
+if (BUILD_TESTING)
+    enable_testing()
+    add_subdirectory(Testing)
+endif (BUILD_TESTING)
 
 if (BUILD_PACKAGE)
     include(CMakePackageConfigHelpers)
