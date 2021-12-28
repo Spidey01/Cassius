@@ -5,53 +5,29 @@
 
 #include <Cassius/SourceString.hpp>
 
-using std::string;
 using std::memcpy;
+using std::string;
 
-namespace Cassius {
-    SourceString::SourceString(const char *code, size_t length)
+namespace Cassius
+{
+    SourceString::SourceString(const std::string& str)
         : Source()
+        , mString(str)
     {
-        if (!length)
-            length = strlen(code)+1;
-        this->length = length;
-
-        source = new char[length];
-        memcpy(source, code, length);
     }
 
-    void SourceString::docopy(const SourceString &other)
+    SourceString::SourceString(const char* code, size_t length)
+        : Source()
+        , mString(code, (length == 0 ? strlen(code) : length))
     {
-        length = other.length;
-        source = new char[length];
-        memcpy(source, other.source, length);
-
-        // Some APIs get upset if the string is not nul terminated.
-        if (length > 0 && source[length-1] != '\0') {
-            source[length-1] = '\0';
-        }
-    }
-
-    const SourceString &SourceString::operator=(const SourceString &other)
-    {
-        if (this != &other) {
-            Source::operator=(other);
-            delete[] source;
-            docopy(other);
-        }
-
-        return *this;
     }
 
     SourceString::~SourceString()
     {
-        delete[] source;
     }
 
     string SourceString::get()
     {
-        // easy safe guard against mutability of this->source
-        return string(source);
+        return mString;
     }
-}
-
+} // namespace Cassius

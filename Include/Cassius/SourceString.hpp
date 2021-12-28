@@ -5,24 +5,36 @@
 
 #include "Source.hpp"
 
-namespace Cassius {
+namespace Cassius
+{
     /** Simple class representing an executable chunk of Source code as a string
      */
-    class CASSIUS_API SourceString : public Source {
+    class CASSIUS_API SourceString
+        : public Source
+    {
       public:
-        SourceString(const char *code, size_t length=0);
-        SourceString(const SourceString &other) { docopy(other); }
-        const SourceString &operator=(const SourceString &other);
+        /**
+         * @brief From standard string.
+         * 
+         * @param str the source code.
+         */
+        SourceString(const std::string& str);
+
+        /**
+         * @brief From C-string and length.
+         * 
+         * @param code the source code.
+         * @param length length of code; if 0 then use strlen().
+         */
+        SourceString(const char* code, size_t length = 0);
+
         virtual ~SourceString();
 
         virtual std::string get();
 
       private:
-        void docopy(const SourceString &other);
-
-        char *source;
-        size_t length;
+        std::string mString;
     };
-}
+} // namespace Cassius
 
 #endif
