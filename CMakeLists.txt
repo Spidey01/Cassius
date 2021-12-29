@@ -46,62 +46,8 @@ if (ENABLE_PYTHON AND NOT WIN32)
     find_package(Python COMPONENTS Development)
 endif (ENABLE_PYTHON AND NOT WIN32)
 
-add_library(Cassius
-    Source/Cassius/Engine.cpp
-    Source/Cassius/Manager.cpp
-    Source/Cassius/NativeFunction.cpp
-    Source/Cassius/SourceStream.cpp
-    Source/Cassius/SourceString.cpp)
-
-target_include_directories(Cassius PUBLIC
-    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/Include>
-    $<INSTALL_INTERFACE:include/${PROJECT_NAME}>)
-
-target_link_libraries(Cassius PRIVATE CxxPlugin)
-
-if (LUA_FOUND)
-    # FindLua.cmake doesn't make a target, just variables.
-    add_library(CassiusCluaEngine MODULE Source/CluaEngine/CluaEngine.cpp Source/CluaEngine/funcs.cpp)
-    target_link_libraries(CassiusCluaEngine PRIVATE Cassius ${LUA_LIBRARIES})
-    target_include_directories(CassiusCluaEngine PRIVATE ${LUA_INCLUDE_DIR})
-    set_target_properties(CassiusCluaEngine PROPERTIES PREFIX "")
-    install(TARGETS CassiusCluaEngine
-        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
-endif (LUA_FOUND)
-
-if (Python_FOUND)
-    # Not tested yet.
-    add_library(CassiusPythonEngine MODULE Source/CPythonEngine/CPythonEngine.cpp)
-    target_link_libraries(CassiusPythonEngine PRIVATE Cassius Python::Python)
-    set_target_properties(CassiusPythonEngine PROPERTIES PREFIX "")
-    install(TARGETS CassiusPythonEngine
-        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
-endif (Python_FOUND)
-
-install(TARGETS Cassius
-    EXPORT CassiusTargets
-    INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
-
-install(FILES
-    Include/Cassius/Cassius.hpp
-    Include/Cassius/CluaEngine.hpp
-    Include/Cassius/CpythonEngine.hpp
-    Include/Cassius/Engine.hpp
-    Include/Cassius/Engine.tpp
-    Include/Cassius/Manager.hpp
-    Include/Cassius/NativeFunction.hpp
-    Include/Cassius/Source.hpp
-    Include/Cassius/SourceFile.hpp
-    Include/Cassius/SourceStream.hpp
-    Include/Cassius/SourceString.hpp
-    Include/Cassius/Value.hpp
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME})
+add_subdirectory(Include)
+add_subdirectory(Source)
 
 if (BUILD_TESTING)
     enable_testing()
