@@ -2,17 +2,21 @@
 cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
 
 add_library(Cassius
+    $<TARGET_OBJECTS:CxxPlugin>
     Engine.cpp
     Manager.cpp
     NativeFunction.cpp
     SourceStream.cpp
     SourceString.cpp)
 
+target_include_directories(Cassius PRIVATE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/Deps/cxx-plugin/include>)
+if (UNIX)
+    target_link_libraries(Cassius -ldl)
+endif (UNIX)
+
 target_include_directories(Cassius PUBLIC
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/Include>
     $<INSTALL_INTERFACE:include/${PROJECT_NAME}>)
-
-target_link_libraries(Cassius PRIVATE CxxPlugin)
 
 install(TARGETS Cassius
     EXPORT CassiusTargets
