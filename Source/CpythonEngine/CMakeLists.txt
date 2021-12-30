@@ -4,6 +4,7 @@ cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
 # Not tested yet.
 add_library(CassiusPythonEngine MODULE CPythonEngine.cpp)
 target_link_libraries(CassiusPythonEngine PRIVATE Cassius Python::Python)
+target_compile_definitions(CassiusPythonEngine PRIVATE -DCassius_EXPORTS)
 set_target_properties(CassiusPythonEngine PROPERTIES PREFIX "")
 install(TARGETS CassiusPythonEngine
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
