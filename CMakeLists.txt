@@ -1,5 +1,5 @@
 # vim: set filetype=cmake tabstop=4 shiftwidth=4 expandtab foldmethod=marker :
-cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.0...3.22 FATAL_ERROR)
 
 project(Cassius
     VERSION 2.0
@@ -8,6 +8,7 @@ project(Cassius
 option(BUILD_SHARED_LIBS "Build libs as shared." ON)
 option(BUILD_TESTING "Enable CTest support." ON)
 option(BUILD_PACKAGE "Enable CPack support." ON)
+option(BUILD_DOCS "Enable Doxygen support." ON)
 option(ENABLE_LUA "Enable Lua support if found." ON)
 option(ENABLE_PYTHON "Enable Python support if found." ON)
 
@@ -86,3 +87,32 @@ if (BUILD_PACKAGE)
 
     include(CPack)
 endif (BUILD_PACKAGE)
+
+if (BUILD_DOCS)
+    if("${CMAKE_VERSION}" VERSION_LESS "3.12") 
+        message("cmake >= 3.9 required for doxygen_add_docs().")
+        message("cmake >= 3.12 required for ALL argument to doxygen_add_docs().")
+    else()
+        find_package(Doxygen)
+    endif()
+
+    if (DOXYGEN_FOUND)
+        set(DOXYGEN_PROJECT_BRIEF "C++ library designed to easily embed scripting languages in programs.")
+        set(DOXYGEN_PROJECT_NAME "Cassius")
+        set(DOXYGEN_EXTRACT_ALL YES)
+        set(DOXYGEN_STRIP_FROM_INC_PATH ${PROJECT_SOURCE_DIR}/include)
+        set(DOXYGEN_USE_MDFILE_AS_MAINPAGE "${PROJECT_SOURCE_DIR}/README.md")
+        set(DOXYGEN_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/docs)
+
+        doxygen_add_docs(docs
+            ${PROJECT_SOURCE_DIR}/CHANGELOG.md
+            ${PROJECT_SOURCE_DIR}/Include/
+            ${PROJECT_SOURCE_DIR}/LICENSE.txt
+            ${PROJECT_SOURCE_DIR}/README.md
+            ALL
+            COMMENT "Generate documentation with Doxygen")
+
+        install(DIRECTORY ${PROJECT_BINARY_DIR}/docs/html
+                DESTINATION ${CMAKE_INSTALL_DOCDIR})
+    endif (DOXYGEN_FOUND)
+endif (BUILD_DOCS)
