@@ -9,6 +9,7 @@ install(FILES
     Cassius/Engine.tpp
     Cassius/Manager.hpp
     Cassius/NativeFunction.hpp
+    Cassius/Plugin.hpp
     Cassius/Source.hpp
     Cassius/SourceFile.hpp
     Cassius/SourceStream.hpp

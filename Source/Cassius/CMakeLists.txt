@@ -6,6 +6,7 @@ add_library(Cassius
     Engine.cpp
     Manager.cpp
     NativeFunction.cpp
+    Plugin.cpp
     SourceStream.cpp
     SourceString.cpp)
 
