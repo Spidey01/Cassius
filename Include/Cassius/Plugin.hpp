@@ -52,8 +52,6 @@ namespace Cassius
 
         ~Plugin();
 
-        // TODO: copy/assign or bust.
-
         /** @returns the plugin name.
          */
         const std::string name() const;
@@ -84,6 +82,10 @@ namespace Cassius
         newengine_fptr_t mCreateFunction;
         std::string mDestroyName;
         deleteengine_fptr_t mDestroyFunction;
+
+        // Non copyable.
+        Plugin(const Plugin& other);
+        Plugin& operator=(const Plugin& other);
     };
 
 } // namespace Cassius
