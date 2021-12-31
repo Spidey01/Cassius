@@ -1,5 +1,5 @@
 # vim: set filetype=cmake tabstop=4 shiftwidth=4 expandtab foldmethod=marker :
-cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.1...3.22 FATAL_ERROR)
 
 add_library(Cassius
     $<TARGET_OBJECTS:CxxPlugin>
