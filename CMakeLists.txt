@@ -17,9 +17,13 @@ include(GNUInstallDirs)
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/Modules)
 include(CassiusGuessTriplet)
 
+# Pick up ./vcpkg if no VCPKG_ROOT.
 # Pick up the toolchain file magically if VCPKG_ROOT is set.
-# Best way to handle windows: vcpkg install the deps and set %VCPKG_ROOT%.
+# Best way to handle windows: vcpkg install the deps and set %VCPKG_ROOT%, or export the deps for .\vcpkg.
 # On Linux: just use the distro package manager, or vcpkg.
+if (NOT DEFINED ENV{VCPKG_ROOT} AND IS_DIRECTORY ${PROJECT_SOURCE_DIR}/vcpkg)
+    set(ENV{VCPKG_ROOT} ${PROJECT_SOURCE_DIR}/vcpkg)
+endif()
 CassiusGuessTriplet(CassiusTriplet)
 if(DEFINED ENV{VCPKG_ROOT})
     if (NOT DEFINED CMAKE_TOOLCHAIN_FILE)

@@ -66,6 +66,8 @@ CMake's find_package() command and [FindPython](https://cmake.org/cmake/help/lat
 
 If using [vcpkg](https://vcpkg.io/) to handle dependencies: export VCPKG_ROOT before running cmake.
 
+If the VCPKG_ROOT environment variable is *NOT* set but a /vcpkg directory exits in the project source: Cassius's build system will set ENV{VCPKG_ROOT} to that.
+
 If the VCPKG_TRIPLET environment variable is not defined: Cassius's build system will attempt to guess. You may wish to export this along with VCPKG_ROOT.
 
 If the VCPKG_ROOT environment variable is set but CMake's CMAKE_TOOLCHAIN_FILE variable is not defined: Cassius's build system will infer this from ENV{VCPKG_ROOT}.
