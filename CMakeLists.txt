@@ -9,6 +9,7 @@ option(BUILD_SHARED_LIBS "Build libs as shared." ON)
 option(BUILD_TESTING "Enable CTest support." ON)
 option(BUILD_PACKAGE "Enable CPack support." ON)
 option(BUILD_DOCS "Enable Doxygen support." ON)
+option(ENABLE_REDIST "Enable copying redist files if using vcpkg." ON)
 option(ENABLE_LUA "Enable Lua support if found." ON)
 option(ENABLE_PYTHON "Enable Python support if found." ON)
 
@@ -120,3 +121,18 @@ if (BUILD_DOCS)
                 DESTINATION ${CMAKE_INSTALL_DOCDIR})
     endif (DOXYGEN_FOUND)
 endif (BUILD_DOCS)
+
+if (ENABLE_REDIST)
+    if (DEFINED ENV{VCPKG_ROOT})
+        set(vcprefix "$ENV{VCPKG_ROOT}/installed/$ENV{VCPKG_TRIPLET}")
+        foreach(vcdir bin debug include lib misc share tools)
+            if (IS_DIRECTORY ${vcprefix}/${vcdir})
+                # Kind of kludgy but effective. When building a package the
+                # GNUInstallDir variables are updated accordingly but
+                # CMAKE_INSTALL_PREFIX/CPACK_PACKAGING_PREFIX can lead to pain and
+                # suffering.
+                install(DIRECTORY "${vcprefix}/${vcdir}" DESTINATION ${CMAKE_INSTALL_BINDIR}/..)
+            endif()
+        endforeach(vcdir)
+    endif()
+endif (ENABLE_REDIST)
