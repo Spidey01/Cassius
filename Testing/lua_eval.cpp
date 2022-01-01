@@ -11,6 +11,8 @@ void run_test(const char* name)
 {
     Cassius::Manager manager;
     Cassius::Engine *engine = manager.CreateEngine(Cassius::LANG_LUA);
+    if (!engine)
+        throw TestFailure("Manager::CreateEngine() returned NULL");
     Cassius::SourceString code("2 + 2");
     engine->Evaluate(code);
 }
