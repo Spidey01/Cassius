@@ -1,0 +1,139 @@
+{
+    "version": 2,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 20,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "Development",
+            "description": "Recommended configuration for development.",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build",
+            "hidden": true,
+            "cacheVariables": {
+                "BUILD_DOCS": {
+                    "type": "BOOL",
+                    "value": "OFF"
+                },
+                "BUILD_SHARED_LIBS": {
+                    "type": "BOOL",
+                    "value": "ON"
+                }
+            }
+        },
+        {
+            "name": "Linux",
+            "inherits": "Development",
+            "displayName": "Linux Development",
+            "description": "Recommended for development on Linux.",
+            "cacheVariables": {
+                "CPACK_BINARY_STGZ": {
+                    "type": "BOOL",
+                    "value": "OFF"
+                },
+                "CPACK_BINARY_TZ": {
+                    "type": "BOOL",
+                    "value": "OFF"
+                },
+                "CPACK_BINARY_TGZ": {
+                    "type": "BOOL",
+                    "value": "ON"
+                }
+            }
+        },
+        {
+            "name": "Windows",
+            "inherits": "Development",
+            "displayName": "Windows Development",
+            "description": "Recommended for development on Windows.",
+            "cacheVariables": {
+                "CPACK_BINARY_NSIS": {
+                    "type": "BOOL",
+                    "value": "OFF"
+                },
+                "CPACK_BINARY_ZIP": {
+                    "type": "BOOL",
+                    "value": "ON"
+                }
+            }
+        },
+        {
+            "name": "Package",
+            "displayName": "Create Packages",
+            "description": "Package for redistribution (TGZ, ZIP).",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "BUILD_DOCS": {
+                    "type": "BOOL",
+                    "value": "ON"
+                },
+                "BUILD_SHARED_LIBS": {
+                    "type": "BOOL",
+                    "value": "ON"
+                },
+                "BUILD_PACKAGE": {
+                    "type": "BOOL",
+                    "value": "ON"
+                },
+                "CPACK_BINARY_NSIS": {
+                    "type": "BOOL",
+                    "value": "OFF"
+                },
+                "CPACK_BINARY_STGZ": {
+                    "type": "BOOL",
+                    "value": "OFF"
+                },
+                "CPACK_BINARY_TZ": {
+                    "type": "BOOL",
+                    "value": "OFF"
+                },
+                "CPACK_BINARY_TGZ": {
+                    "type": "BOOL",
+                    "value": "ON"
+                },
+                "CPACK_BINARY_ZIP": {
+                    "type": "BOOL",
+                    "value": "ON"
+                }
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "Linux",
+            "configurePreset": "Linux"
+        },
+        {
+            "name": "Windows",
+            "configurePreset": "Windows"
+        },
+        {
+            "name": "Package",
+            "configurePreset": "Package",
+            "targets": [
+                "all",
+                "package"
+            ]
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "Linux",
+            "description": "",
+            "displayName": "",
+            "configurePreset": "Linux"
+        },
+        {
+            "name": "Windows",
+            "description": "",
+            "displayName": "",
+            "configurePreset": "Windows",
+            "environment": {
+                "PATH": "$env{VCPKG_ROOT}\\installed\\x64-windows\\bin;${sourceDir}\\installed\\x64-windows\\bin;${sourceDir}\\build\\Source\\Cassius;${sourceDir}\\build\\Source\\CluaEngine;$penv{PATH}"
+            }
+        }
+    ]
+}
