@@ -10,9 +10,10 @@
 void run_test(const char* name)
 {
     Cassius::Manager manager;
-    Cassius::Engine *engine = manager.CreateEngine(Cassius::LANG_PYTHON);
+    Cassius::Engine *engine = manager.createEngine(Cassius::LANG_PYTHON);
     if (!engine)
-        throw TestFailure("Manager::CreateEngine() returned NULL");
+        throw TestFailure("Manager::createEngine() returned NULL");
     Cassius::SourceString code("2 + 2");
     engine->Evaluate(code);
+    manager.destroyEngine(engine);
 }
