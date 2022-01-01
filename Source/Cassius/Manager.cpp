@@ -1,139 +1,127 @@
 // SPDX-License-Identifier: ISC
 // Copyright 2010, Terry M. Poulin.
 
+#include <Cassius/Manager.hpp>
+#include <Cassius/Plugin.hpp>
 #include <cassert>
-
+#include <iostream>
+#include <sstream>
 #include <stdexcept>
 
-#include <CxxPlugin.hxx>
-
-#include <Cassius/Manager.hpp>
-
-using std::list;
+using std::invalid_argument;
 using std::runtime_error;
+using std::string;
+using std::stringstream;
 
 namespace Cassius
 {
 
     Manager::Manager()
+#if defined(NDEBUG)
+        : mLogger(NULL)
+#else
+        : mLogger(&std::clog)
+#endif
+        , mPlugins()
+        , mEngines()
     {
-        backends.clua = 0;
-        backends.new_clua = 0;
-        backends.delete_clua = 0;
+    }
 
-        backends.cpython = 0;
-        backends.new_cpython = 0;
-        backends.delete_cpython = 0;
-
-        backends.spidermonkey = 0;
-        backends.new_spidermonkey = 0;
-        backends.delete_spidermonkey = 0;
-
-        backends.v8 = 0;
-        backends.new_v8 = 0;
-        backends.delete_v8 = 0;
+    Manager::Manager(std::ostream* logger)
+        : mLogger(logger)
+        , mPlugins()
+        , mEngines()
+    {
     }
 
     Manager::~Manager()
     {
-        list<Engine*>::iterator it;
-
-        for (it = engines.begin(); it != engines.end(); ++it) {
-            deleteengine_fptr_t delete_engine = 0;
-
-            switch ((*it)->lang) {
-                case LANG_LUA:
-                    assert(backends.delete_clua != 0);
-                    delete_engine = backends.delete_clua;
-                    break;
-                case LANG_PYTHON:
-                    assert(backends.delete_cpython != 0);
-                    delete_engine = backends.delete_cpython;
-                    break;
-                case LANG_ECMASCRIPT:
-                    switch ((*it)->impl) {
-                        case IMPL_SPIDERMONKEY:
-                            assert(backends.delete_spidermonkey != 0);
-                            delete_engine = backends.delete_spidermonkey;
-                            break;
-                        case IMPL_V8:
-                            assert(backends.delete_v8 != 0);
-                            delete_engine = backends.delete_v8;
-                            break;
-                        default:
-                            break;
-                    }
-                default:
-                    // TODO some way of logging this and prevent the delete.
-                    // This will be NOTREACHED when valid enum values are given.
-                    break;
-            }
-            if (delete_engine) {
-                delete_engine(*it);
-            }
+        // Cheesy horror or brillant reuse?
+        while (!mEngines.empty()) {
+            destroyEngine(mEngines.begin()->first);
         }
     }
 
-    Engine* Manager::CreateEngine(ScriptLanguages lang, Backends impl)
+    Engine* Manager::createEngine(ScriptLanguages lang)
     {
-        newengine_fptr_t newengine;
-
-#define LOAD_ENGINE(n, plugname)                                                               \
-    do {                                                                                       \
-        if (!backends.n) {                                                                     \
-            backends.n = new CxxPlugin((plugname));                                            \
-            backends.new_##n = (newengine_fptr_t)backends.n->load_funcptr("new_" #n);          \
-            backends.delete_##n = (deleteengine_fptr_t)backends.n->load_funcptr("delete_" #n); \
-            if ((!backends.new_##n) || (!backends.delete_##n)) {                               \
-                return 0;                                                                      \
-            }                                                                                  \
-        }                                                                                      \
-    } while (0)
-
+        string plugin;
         switch (lang) {
-            case LANG_LUA: {
-                LOAD_ENGINE(clua, "CassiusCluaEngine");
-                newengine = backends.new_clua;
+            case LANG_LUA:
+                plugin = "CassiusCluaEngine";
                 break;
-            }
-            case LANG_PYTHON: {
-                LOAD_ENGINE(cpython, "CassiusCpythonEngine");
-                newengine = backends.new_cpython;
-                break;
-            }
-            case LANG_ECMASCRIPT:
-                switch (impl) {
-                    case IMPL_SPIDERMONKEY: {
-                        LOAD_ENGINE(spidermonkey,
-                                    "CassiusSpiderMonkeyEngine");
-                        newengine = backends.new_spidermonkey;
-                        break;
-                    }
-                    case IMPL_V8: {
-                        LOAD_ENGINE(v8, "CassiusV8Engine");
-                        newengine = backends.new_v8;
-                        break;
-                    }
-                    default:
-                        return 0; // wrong impl
-                }
+            case LANG_PYTHON:
+                plugin = "CassiusCpythonEngine";
                 break;
             default:
-                return 0;
+                break;
+        }
+        return createEngine(lang, plugin);
+    }
+
+    Engine* Manager::createEngine(ScriptLanguages lang, const string& plugin)
+    {
+        /*
+         * XXX: This assumes that it is safe to create and destroy an instance
+         * of the plugin for each instance.
+         *
+         * For POSIX dlopen() and Windows LoadLibrary() platforms this is true.
+         * Because these platforms use per process reference counting and try to
+         * do the right thing. Any sane platform should do this if it has a
+         * concept of runtime library loading.
+         * 
+         * At worst we should waste a handful of extra bytes per engine by using
+         * one Plugin per Engine instead of reusing Plugin instances for each
+         * Engine associated with that module.
+         */
+        Plugin* p = new Plugin(plugin, lang, mLogger);
+
+        if (!mPlugins.insert(p).second) {
+            delete p;
+            stringstream err;
+            err << "Cassius::Manager::createEngine(): mPlugins.insert() failed for 0x" << std::hex << p << " plugin for " << plugin;
+            throw runtime_error(err.str());
         }
 
-        Engine* e = newengine();
-        //
-        // Technically failure here should result in a bad_alloc being thrown.
-        // Between Windows, Users, and Typos, better to be safe than SIGSEGSRY.
-        //
-        if (!e) {
-            return 0;
+        Engine* engine = NULL;
+        try {
+            engine = p->create();
+        } catch (std::exception& ex) {
+            string msg("Cassius::Manager::createEngine(): extern C functions should never throw but plugin's create function threw exception: ");
+            msg.append(ex.what());
+            throw runtime_error(msg);
         }
-        e->lang = lang;
-        e->impl = impl;
-        engines.push_back(e);
-        return e;
+
+        if (engine) {
+            /* For destroyEngine(). */
+            mEngines[engine] = p;
+        }
+
+        return engine;
+    }
+
+    void Manager::destroyEngine(Engine* engine)
+    {
+        if (!engine) {
+            if (mLogger)
+                *mLogger << "Cassius::Manager::destroyEngine(): called with NULL." << std::endl;
+            return;
+        }
+
+        EngineToPluginMap::iterator it = mEngines.find(engine);
+        if (it == mEngines.end()) {
+            stringstream err;
+            err << "Cassius::Manager::destroyEngine(): engine pointer " << engine << " is not in mEngines.";
+            throw invalid_argument(err.str());
+        }
+
+        assert(engine == it->first);
+        Plugin* p = it->second;
+
+        mEngines.erase(it);
+        /** See XXX comment in createEngine(). */
+        mPlugins.erase(p);
+        p->destroy(engine);
+        delete p;
     }
 
 } // namespace Cassius
