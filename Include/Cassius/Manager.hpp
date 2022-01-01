@@ -9,7 +9,8 @@
 
 class CxxPlugin;
 
-namespace Cassius {
+namespace Cassius
+{
 
     /** Simple class to help manage your active Engine objects.
      *
@@ -18,7 +19,8 @@ namespace Cassius {
      * take your chances trying to embed several languages into the same
      * program.
      */
-    class CASSIUS_API Manager {
+    class CASSIUS_API Manager
+    {
       public:
         Manager();
         virtual ~Manager();
@@ -42,35 +44,34 @@ namespace Cassius {
          * @returns a valid Engine object for lang, else NULL.
          * @throws std::runtime_error if unable to load backend.
          */
-        virtual Engine *CreateEngine(ScriptLanguages lang, Backends
-                                     impl=IMPL_DEFAULT);
+        virtual Engine* CreateEngine(ScriptLanguages lang, Backends
+                                                               impl = IMPL_DEFAULT);
 
       private:
-        Manager(const Manager &other);
-        const Manager &operator=(const Manager &other);
+        Manager(const Manager& other);
+        const Manager& operator=(const Manager& other);
 
-        std::list<Engine *> engines;
+        std::list<Engine*> engines;
 
-        typedef Engine *(*newengine_fptr_t)();
-        typedef void (*deleteengine_fptr_t)(Engine *);
+        typedef Engine* (*newengine_fptr_t)();
+        typedef void (*deleteengine_fptr_t)(Engine*);
         struct {
-            CxxPlugin *clua;
+            CxxPlugin* clua;
             newengine_fptr_t new_clua;
             deleteengine_fptr_t delete_clua;
 
-            CxxPlugin *cpython;
+            CxxPlugin* cpython;
             newengine_fptr_t new_cpython;
             deleteengine_fptr_t delete_cpython;
 
-            CxxPlugin *spidermonkey;
+            CxxPlugin* spidermonkey;
             newengine_fptr_t new_spidermonkey;
             deleteengine_fptr_t delete_spidermonkey;
 
-            CxxPlugin *v8;
+            CxxPlugin* v8;
             newengine_fptr_t new_v8;
             deleteengine_fptr_t delete_v8;
         } backends;
     };
-}
+} // namespace Cassius
 #endif
-

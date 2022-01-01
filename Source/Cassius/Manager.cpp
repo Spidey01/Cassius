@@ -12,7 +12,8 @@
 using std::list;
 using std::runtime_error;
 
-namespace Cassius {
+namespace Cassius
+{
 
     Manager::Manager()
     {
@@ -35,9 +36,9 @@ namespace Cassius {
 
     Manager::~Manager()
     {
-        list<Engine *>::iterator it;
+        list<Engine*>::iterator it;
 
-        for (it=engines.begin(); it != engines.end(); ++it) {
+        for (it = engines.begin(); it != engines.end(); ++it) {
             deleteengine_fptr_t delete_engine = 0;
 
             switch ((*it)->lang) {
@@ -73,51 +74,46 @@ namespace Cassius {
         }
     }
 
-    Engine *Manager::CreateEngine(ScriptLanguages lang, Backends impl)
+    Engine* Manager::CreateEngine(ScriptLanguages lang, Backends impl)
     {
         newengine_fptr_t newengine;
 
-#define LOAD_ENGINE(n, plugname) \
-    do { \
-        if (!backends. n ) { \
-            backends. n = new CxxPlugin((plugname)); \
-            backends.new_##n = (newengine_fptr_t)backends. n ->load_funcptr("new_" #n ); \
-            backends.delete_##n = (deleteengine_fptr_t)backends. n ->load_funcptr("delete_" #n ); \
-            if ( (!backends.new_##n ) || (!backends.delete_##n ) ) { \
-                return 0; \
-            } \
-        } \
+#define LOAD_ENGINE(n, plugname)                                                               \
+    do {                                                                                       \
+        if (!backends.n) {                                                                     \
+            backends.n = new CxxPlugin((plugname));                                            \
+            backends.new_##n = (newengine_fptr_t)backends.n->load_funcptr("new_" #n);          \
+            backends.delete_##n = (deleteengine_fptr_t)backends.n->load_funcptr("delete_" #n); \
+            if ((!backends.new_##n) || (!backends.delete_##n)) {                               \
+                return 0;                                                                      \
+            }                                                                                  \
+        }                                                                                      \
     } while (0)
 
-
         switch (lang) {
-            case LANG_LUA:
-                {
-                    LOAD_ENGINE(clua, "CassiusCluaEngine");
-                    newengine = backends.new_clua;
-                    break;
-                }
-            case LANG_PYTHON:
-                {
-                    LOAD_ENGINE(cpython, "CassiusCpythonEngine");
-                    newengine = backends.new_cpython;
-                    break;
-                }
+            case LANG_LUA: {
+                LOAD_ENGINE(clua, "CassiusCluaEngine");
+                newengine = backends.new_clua;
+                break;
+            }
+            case LANG_PYTHON: {
+                LOAD_ENGINE(cpython, "CassiusCpythonEngine");
+                newengine = backends.new_cpython;
+                break;
+            }
             case LANG_ECMASCRIPT:
                 switch (impl) {
-                    case IMPL_SPIDERMONKEY:
-                        {
-                            LOAD_ENGINE(spidermonkey,
-                                        "CassiusSpiderMonkeyEngine");
-                            newengine = backends.new_spidermonkey;
-                            break;
-                        }
-                    case IMPL_V8:
-                        {
-                            LOAD_ENGINE(v8, "CassiusV8Engine");
-                            newengine = backends.new_v8;
-                            break;
-                        }
+                    case IMPL_SPIDERMONKEY: {
+                        LOAD_ENGINE(spidermonkey,
+                                    "CassiusSpiderMonkeyEngine");
+                        newengine = backends.new_spidermonkey;
+                        break;
+                    }
+                    case IMPL_V8: {
+                        LOAD_ENGINE(v8, "CassiusV8Engine");
+                        newengine = backends.new_v8;
+                        break;
+                    }
                     default:
                         return 0; // wrong impl
                 }
@@ -126,7 +122,7 @@ namespace Cassius {
                 return 0;
         }
 
-        Engine *e = newengine();
+        Engine* e = newengine();
         //
         // Technically failure here should result in a bad_alloc being thrown.
         // Between Windows, Users, and Typos, better to be safe than SIGSEGSRY.
@@ -140,5 +136,4 @@ namespace Cassius {
         return e;
     }
 
-}
-
+} // namespace Cassius
