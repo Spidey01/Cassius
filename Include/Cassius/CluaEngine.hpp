@@ -43,8 +43,8 @@ namespace Cassius {
     };
 }
 
-extern "C" Cassius::Engine *new_clua(void);
-extern "C" void delete_clua(Cassius::Engine *obj);
+extern "C" CASSIUS_API Cassius::Engine* new_CassiusCluaEngine(void);
+extern "C" CASSIUS_API void delete_CassiusCluaEngine(Cassius::Engine* obj);
 
 #endif
 
