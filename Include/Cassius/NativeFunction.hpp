@@ -13,7 +13,7 @@ namespace Cassius {
      *
      * I.e. your function should have the prototype:
      *
-     *    NativeFunction::return_type funcname(NativeFunction::argument_type);
+     *    NativeFunction::result_type funcname(NativeFunction::argument_type);
      *
      * @see Engine::Register
      */
