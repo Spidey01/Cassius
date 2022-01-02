@@ -30,7 +30,7 @@ void run_test(const char *name)
     if (!(src == copyConstructed) || !(src == copyAssigned))
         throw TestFailure("Operator == failure");
 
-#if TESTS_USE_CXX11
+#if Cassius_CXX11
     Cassius::SourceString moveAssigned = std::move(copyAssigned);
     if (moveAssigned.get() != hello)
         throw TestFailure("moveAssigned.get() != expected");

@@ -20,6 +20,23 @@
 
 #define CASSIUS_API CASSIUS_EXPORT
 
+/**
+ * Provides the macros:
+ * - Cassius_CXX11
+ * - Cassius_CXX14
+ * - Cassius_CXX17
+ * 
+ * Defined as 0 or 1 based on detection macros. Note, this assumes that the
+ * language standard used to build the library is the same as the toolchain
+ * consuming it. E.g if you build the library in C++98 mode and use it with a
+ * C++17 compiler, bad things will follow and vice versa.
+ * 
+ * P.S. please just stop using pre C++14 \o/.
+ * 
+ * @see https://github.com/Spidey01/cxxversion_and_stdheaders
+ */
+#include <Cassius/cxxversion.hpp>
+
 #include <cstddef>
 
 namespace Cassius {
