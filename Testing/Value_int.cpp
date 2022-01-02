@@ -20,4 +20,8 @@ void run_test(const char *name)
     if (i != 4) {
         throw TestFailure("value().asInt is not 4");
     }
+
+    if (value.as_integer() != 4) {
+        throw TestFailure("as_integer() is not 4");
+    }
 }

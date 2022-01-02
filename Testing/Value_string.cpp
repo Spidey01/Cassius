@@ -24,6 +24,10 @@ static void string_test(const Cassius::Value& value, const string& expected)
     if (std::strcmp(s, expected.c_str()) != 0) {
         throw TestFailure("value().asString != expected)");
     }
+
+    if (value.as_integer() != std::atoi(expected.c_str())) {
+        throw TestFailure("as_integer() != atoi(expected)");
+    }
 }
 
 void run_test(const char* name)

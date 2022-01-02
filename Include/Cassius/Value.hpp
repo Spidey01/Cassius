@@ -72,6 +72,12 @@ namespace Cassius
         Value& operator=(const char* s);
         Value& operator=(void* p);
 
+        /**
+         * @brief Access as if type was isInt.
+         * 
+         * @returns value converted to integer.
+         */
+        int as_integer() const;
       private:
         types mType;
         values mValue;

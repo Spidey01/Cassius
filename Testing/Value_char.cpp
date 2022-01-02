@@ -21,6 +21,10 @@ static void char_test(const Cassius::Value &value, char expected)
     if (value.value().asChar != expected) {
         throw TestFailure("value().asChar != expected)");
     }
+
+    if (value.as_integer() != static_cast<int>(expected)) {
+        throw TestFailure("as_integer() != expected");
+    }
 }
 
 void run_test(const char *name)

@@ -21,6 +21,10 @@ static void bool_test(const Cassius::Value &value, bool expected)
     if (value.value().asBool != expected) {
         throw TestFailure("value().asBool != expected)");
     }
+
+    if (value.as_integer() != static_cast<int>(expected)) {
+        throw TestFailure("as_integer() != expected");
+    }
 }
 
 void run_test(const char *name)

@@ -2,6 +2,10 @@
 // Copyright 2010,2022 Terry M. Poulin.
 
 #include <Cassius/Value.hpp>
+#include <cstdint>
+#include <stdexcept>
+
+using std::logic_error;
 
 namespace Cassius
 {
@@ -103,6 +107,29 @@ namespace Cassius
         mValue.asPtr = p;
         mType = isPtr;
         return *this;
+    }
+
+    int Value::as_integer() const
+    {
+        switch (mType) {
+            case isNull:
+                return 0;
+            case isBool:
+                return mValue.asBool;
+            case isChar:
+                return mValue.asChar;
+            case isInt:
+                return mValue.asInt;
+            case isReal:
+                return (int)mValue.asReal;
+            case isString:
+                return std::atoi(mValue.asString);
+            case isPtr:
+                // CRINGE!!!
+                return (int)(intptr_t)mValue.asPtr;
+            default:
+                throw logic_error("Value::as_integer(): no type()");
+        }
     }
 
 } // namespace Cassius

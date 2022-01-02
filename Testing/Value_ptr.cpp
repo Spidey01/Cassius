@@ -28,4 +28,9 @@ void run_test(const char *name)
     if (*v != *ptr) {
         throw TestFailure("*value().asPtr != *expected)");
     }
+
+    // Remember folks: sizeof(pointer types) != sizeof(int), everywhere!
+    if (value.as_integer() != (int)ptr) {
+        throw TestFailure("as_integer() != (int)ptr");
+    }
 }
