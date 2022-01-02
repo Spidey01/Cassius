@@ -3,11 +3,11 @@
 // SPDX-License-Identifier: ISC
 // Copyright 2010, Terry M. Poulin.
 
-#include "Cassius.hpp"
-
+#include <Cassius/Cassius.hpp>
 #include <stack>
 
-namespace Cassius {
+namespace Cassius
+{
     /** Helper class representing a handle to a plain old C++ value.
      *
      * This is principally used by C++ code that needs to give or receive a
@@ -21,39 +21,62 @@ namespace Cassius {
      *
      * @see Engine::Register
      */
-    class CASSIUS_API Value {
+    class CASSIUS_API Value
+    {
       public:
-        enum types { isBool, isChar, isInt, isReal, isString, isPtr };
+        ///
+        /// Enumeration of the types a Value can contain.
+        ///
+        enum types {
+            isNull,   ///< No type or value. Default initialized.
+            isBool,   ///< Contains boolean type.
+            isChar,   ///< Contains character type.
+            isInt,    ///< Contains integeral type.
+            isReal,   ///< Contains floating point type.
+            isString, ///< Contains string type.
+            isPtr,    ///< Contains a pointer type. Not recommended.
+        };
+
+        ///
+        /// Union for accessing the raw value.
+        ///
+        /// Never access this unless type() returns the corrisponding types
+        /// enum.
+        ///
         union values {
             bool asBool;
             char asChar;
             int asInt;
             double asReal;
-            const char *asString;
-            void *asPtr;
+            const char* asString;
+            void* asPtr;
         };
 
-        Value()                  { /* supplied copy ctor / copy operator=
-                                    * should be sufficent for your needs
-                                    */
-                                 }
-        Value(bool b)            { myValue.asBool = b; myType = isBool; }
-        Value(int i)             { myValue.asInt = i; myType = isInt; }
-        Value(char c)            { myValue.asChar = c; myType = isChar; }
-        Value(double d)          { myValue.asReal = d; myType = isReal; }
-        Value(const char *s)     { myValue.asString = s; myType = isString; }
-        Value(void *p)           { myValue.asPtr = p; myType = isPtr; }
+        Value();
+        Value(const Value& other);
+        Value(bool b);
+        Value(int i);
+        Value(char c);
+        Value(double d);
+        Value(const char* s);
+        Value(void* p);
 
-        const inline types type() const { return myType; }
-        const inline values value() const { return myValue; }
+        const inline types type() const { return mType; }
+        const inline values value() const { return mValue; }
+
+        Value& operator=(const Value& other);
+        Value& operator=(bool b);
+        Value& operator=(int i);
+        Value& operator=(char c);
+        Value& operator=(double d);
+        Value& operator=(const char* s);
+        Value& operator=(void* p);
 
       private:
-        mutable types myType;
-        mutable values myValue;
+        types mType;
+        values mValue;
     };
 
-
     typedef std::stack<Value> ValueList;
-}
+} // namespace Cassius
 #endif
-

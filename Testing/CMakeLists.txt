@@ -7,13 +7,14 @@ function(add_cassius_test name)
     add_test(${name}_test ${name})
 endfunction(add_cassius_test)
 
+add_cassius_test(Value_List)
 add_cassius_test(Value_bool)
 add_cassius_test(Value_char)
 add_cassius_test(Value_int)
+add_cassius_test(Value_operators)
 add_cassius_test(Value_ptr)
 add_cassius_test(Value_real)
 add_cassius_test(Value_string)
-add_cassius_test(Value_List)
 
 add_cassius_test(Source_String)
 

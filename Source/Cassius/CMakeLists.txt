@@ -8,7 +8,8 @@ add_library(Cassius
     NativeFunction.cpp
     Plugin.cpp
     SourceStream.cpp
-    SourceString.cpp)
+    SourceString.cpp
+    Value.cpp)
 
 target_include_directories(Cassius PRIVATE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/Deps/cxx-plugin/include>)
 if (UNIX)
