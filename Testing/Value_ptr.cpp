@@ -7,6 +7,7 @@
 #include "./Common.hpp"
 
 #include <Cassius/Value.hpp>
+#include <cstdint>
 
 void run_test(const char *name)
 {
@@ -30,7 +31,11 @@ void run_test(const char *name)
     }
 
     // Remember folks: sizeof(pointer types) != sizeof(int), everywhere!
-    if (value.as_integer() != (int)ptr) {
+    if (value.as_integer() != (int)(intptr_t)ptr) {
         throw TestFailure("as_integer() != (int)ptr");
+    }
+    // Why would you!?
+    if (value.as_real() != (double)(intptr_t)ptr) {
+        throw TestFailure("as_real() != (double)ptr");
     }
 }

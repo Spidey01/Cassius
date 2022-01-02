@@ -24,4 +24,8 @@ void run_test(const char *name)
     if (value.as_integer() != (int)r) {
         throw TestFailure("asInteger() != (int)r");
     }
+
+    if (value.as_real() < 1.9 || value.as_real() > 2.1) {
+        throw TestFailure("as_real() is out of range");
+    }
 }

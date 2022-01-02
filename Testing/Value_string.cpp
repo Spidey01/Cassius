@@ -28,6 +28,10 @@ static void string_test(const Cassius::Value& value, const string& expected)
     if (value.as_integer() != std::atoi(expected.c_str())) {
         throw TestFailure("as_integer() != atoi(expected)");
     }
+
+    if (value.as_real() != std::atof(expected.c_str())) {
+        throw TestFailure("as_real() != atof(expected)");
+    }
 }
 
 void run_test(const char* name)

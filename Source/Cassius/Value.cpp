@@ -132,4 +132,25 @@ namespace Cassius
         }
     }
 
+    double Value::as_real() const
+    {
+        switch (mType) {
+            case isNull:
+                return 0.0;
+            case isBool:
+                return mValue.asBool;
+            case isChar:
+                return mValue.asChar;
+            case isInt:
+                return (double)mValue.asInt;
+            case isReal:
+                return mValue.asReal;
+            case isString:
+                return std::atof(mValue.asString);
+            case isPtr:
+                return (double)(intptr_t)mValue.asPtr;
+            default:
+                throw logic_error("Value::as_real(): no type()");
+        }
+    }
 } // namespace Cassius

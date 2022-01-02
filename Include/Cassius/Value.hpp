@@ -78,6 +78,13 @@ namespace Cassius
          * @returns value converted to integer.
          */
         int as_integer() const;
+
+        /**
+         * @brief Access as if type was isReal.
+         * 
+         * @returns value converted to double.
+         */
+        double as_real() const;
       private:
         types mType;
         values mValue;
