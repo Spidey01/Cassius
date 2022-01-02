@@ -5,6 +5,7 @@
 
 #include <Cassius/Cassius.hpp>
 #include <stack>
+#include <string>
 
 namespace Cassius
 {
@@ -85,6 +86,19 @@ namespace Cassius
          * @returns value converted to double.
          */
         double as_real() const;
+
+        /**
+         * @brief Access as if type was isString.
+         * 
+         * While most types have some logical conversion (e.g. 1234 to "1234"),
+         * the exact representation may vary for given types and should be
+         * regarded to change without notice. Such as converting a pointers or
+         * booleans to a string.
+         * 
+         * @returns value converted to string.
+         */
+        std::string as_string() const;
+
       private:
         types mType;
         values mValue;

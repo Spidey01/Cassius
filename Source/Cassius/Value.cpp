@@ -153,4 +153,50 @@ namespace Cassius
                 throw logic_error("Value::as_real(): no type()");
         }
     }
+
+    std::string Value::as_string() const
+    {
+        char* buffer = NULL;
+        int length = 0;
+
+        switch (mType) {
+            case isNull:
+                return "";
+            case isBool:
+                if (mValue.asBool)
+                    return "true";
+                return "false";
+            case isChar:
+                return std::string(1, mValue.asChar);
+            case isInt:
+                length = std::snprintf(NULL, 0, "%d", mValue.asInt);
+                buffer = new char[length + 1];
+                (void)std::sprintf(buffer, "%d", mValue.asInt);
+                break;
+            case isReal:
+                length = std::snprintf(NULL, 0, "%f", mValue.asReal);
+                buffer = new char[length + 1];
+                (void)std::sprintf(buffer, "%f", mValue.asReal);
+                break;
+            case isString:
+                return std::string(mValue.asString);
+            case isPtr:
+                length = std::snprintf(NULL, 0, "%p", mValue.asPtr);
+                buffer = new char[length + 1];
+                (void)std::sprintf(buffer, "%p", mValue.asPtr);
+                break;
+            default:
+                throw logic_error("Value::as_string(): no type()");
+        }
+
+        std::string str;
+        try {
+            if (buffer)
+                str.assign(buffer, length);
+        } catch (...) {
+            if (buffer)
+                delete[] buffer;
+        }
+        return str;
+    }
 } // namespace Cassius

@@ -28,4 +28,8 @@ void run_test(const char *name)
     if (value.as_real() < 1.9 || value.as_real() > 2.1) {
         throw TestFailure("as_real() is out of range");
     }
+
+    if (value.as_string().find("2.0") != 0) {
+        throw TestFailure("as_string() bad return or bad precision?");
+    }
 }

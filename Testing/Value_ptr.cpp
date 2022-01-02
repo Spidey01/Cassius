@@ -38,4 +38,11 @@ void run_test(const char *name)
     if (value.as_real() != (double)(intptr_t)ptr) {
         throw TestFailure("as_real() != (double)ptr");
     }
+
+    // snprintf(p) is implementation defined but usually 0 padded word length
+    // integer in hex or dec format.
+    string str = value.as_string();
+    if (str.empty()) {
+        throw TestFailure("as_string() gave empty string");
+    }
 }

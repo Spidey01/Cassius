@@ -27,4 +27,7 @@ void run_test(const char *name)
     if (value.as_real() < 3.9 || value.as_real() > 4.1) {
         throw TestFailure("as_real() is out of range");
     }
+    if (value.as_string() != "4") {
+        throw TestFailure("as_string() is not \"4\"");
+    }
 }

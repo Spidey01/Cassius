@@ -28,6 +28,9 @@ static void char_test(const Cassius::Value &value, char expected)
     if (value.as_real() != static_cast<double>(expected)) {
         throw TestFailure("as_real() != expected");
     }
+    if (value.as_string() != std::string(1, expected)) {
+        throw TestFailure("as_string() != expected");
+    }
 }
 
 void run_test(const char *name)

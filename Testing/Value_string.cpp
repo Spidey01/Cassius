@@ -32,6 +32,10 @@ static void string_test(const Cassius::Value& value, const string& expected)
     if (value.as_real() != std::atof(expected.c_str())) {
         throw TestFailure("as_real() != atof(expected)");
     }
+
+    if (value.as_string() != expected) {
+        throw TestFailure("as_string() != expected");
+    }
 }
 
 void run_test(const char* name)
