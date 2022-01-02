@@ -29,6 +29,7 @@ if (LUA_FOUND)
     endif (WIN32 AND DEFINED ENV{VCPKG_ROOT})
 
     add_cassius_test(lua_eval)
+    add_cassius_test(lua_NativeFunction)
     add_cassius_test(lua_ScriptFunction)
 endif (LUA_FOUND)
 
