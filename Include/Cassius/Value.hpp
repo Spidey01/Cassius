@@ -99,10 +99,44 @@ namespace Cassius
          */
         std::string as_string() const;
 
+        /**
+         * @brief Template based conversion.
+         * 
+         * @tparam T must be one of the provided specializations.
+         * 
+         * @returns value converted to T.
+         */
+        template <class T>
+        inline T get() const;
+
       private:
         types mType;
         values mValue;
     };
+
+    // template <class T>
+    // T Value::get() const
+    // {
+    //     throw std::logic_error("No default conversion");
+    // }
+
+    template <>
+    inline int Value::get<int>() const
+    {
+        return as_integer();
+    }
+
+    template <>
+    inline double Value::get<double>() const
+    {
+        as_real();
+    }
+
+    template <>
+    inline std::string Value::get<std::string>() const
+    {
+        return as_string();
+    }
 
     typedef std::stack<Value> ValueList;
 } // namespace Cassius
