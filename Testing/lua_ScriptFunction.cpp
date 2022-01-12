@@ -32,7 +32,8 @@ void run_test(const char* name)
               << source.get() << std::endl;
     engine->Evaluate(source);
     std::cout << "Calling from C++ by Engine::Evaluate()." << std::endl;
-    engine->Evaluate(Cassius::SourceString("print(\"return value:\", from_script(2, 2))"));
+    Cassius::SourceString print_and_run("print(\"return value:\", from_script(2, 2))");
+    engine->Evaluate(print_and_run);
 
     std::cout << "Wrapping in ScriptFunction" << std::endl;
     using from_script_signature = Cassius::ScriptFunction<int(int, int)>;
