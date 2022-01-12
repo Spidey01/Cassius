@@ -129,7 +129,7 @@ namespace Cassius
     template <>
     inline double Value::get<double>() const
     {
-        as_real();
+        return as_real();
     }
 
     template <>
