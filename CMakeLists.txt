@@ -11,7 +11,8 @@ option(BUILD_PACKAGE "Enable CPack support." ON)
 option(BUILD_DOCS "Enable Doxygen support." ON)
 option(ENABLE_REDIST "Enable copying redist files if using vcpkg." ON)
 option(ENABLE_LUA "Enable Lua support if found." ON)
-option(ENABLE_PYTHON "Enable Python support if found." ON)
+# Disabling by default, because old/WIP that doesn't compile on Python3.
+option(ENABLE_PYTHON "Enable Python support if found." OFF)
 
 include(GNUInstallDirs)
 
