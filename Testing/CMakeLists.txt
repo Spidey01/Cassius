@@ -46,15 +46,6 @@ add_cassius_test(Value_string)
 add_cassius_test(Source_String)
 
 if (LUA_FOUND)
-    # lua.dll needs to be next to the exe or the plugin. LoadLibrary() considers
-    # PATH to find the plugin itself, but () will attempt to load
-    # CassiusCluaEngine.dll and then fail because lua.dll was not found even
-    # though it is in PATH.
-
-    if (WIN32 AND DEFINED ENV{VCPKG_ROOT})
-        configure_file("$ENV{VCPKG_ROOT}/installed/$ENV{VCPKG_TRIPLET}/bin/lua.dll" ${CMAKE_CURRENT_BINARY_DIR}/ COPYONLY)
-    endif (WIN32 AND DEFINED ENV{VCPKG_ROOT})
-
     list(APPEND ld_library_path ${PROJECT_BINARY_DIR}/Source/CluaEngine)
 
     add_cassius_test(lua_eval)
