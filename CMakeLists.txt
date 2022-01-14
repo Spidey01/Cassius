@@ -129,7 +129,11 @@ endif (BUILD_DOCS)
 
 if (ENABLE_REDIST)
     if (DEFINED ENV{VCPKG_ROOT})
+        if (VCPKG_MANIFEST_MODE)
+            set(vcprefix "${PROJECT_BINARY_DIR}/vcpkg_installed/$ENV{VCPKG_TRIPLET}")
+        else ()
         set(vcprefix "$ENV{VCPKG_ROOT}/installed/$ENV{VCPKG_TRIPLET}")
+        endif ()
         foreach(vcdir bin debug include lib misc share tools)
             if (IS_DIRECTORY ${vcprefix}/${vcdir})
                 # Kind of kludgy but effective. When building a package the
