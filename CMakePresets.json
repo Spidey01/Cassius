@@ -130,10 +130,7 @@
             "name": "Windows",
             "description": "",
             "displayName": "",
-            "configurePreset": "Windows",
-            "environment": {
-                "PATH": "$env{VCPKG_ROOT}\\installed\\x64-windows\\bin;${sourceDir}\\installed\\x64-windows\\bin;${sourceDir}\\build\\Source\\Cassius;${sourceDir}\\build\\Source\\CluaEngine;$penv{PATH}"
-            }
+            "configurePreset": "Windows"
         }
     ]
 }
