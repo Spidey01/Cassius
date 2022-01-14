@@ -95,8 +95,6 @@ namespace Cassius {
     CluaEngine::CluaEngine()
         : Engine()
     {
-        lang = LANG_LUA;
-
         if ((interp = luaL_newstate()) == 0) {
             throw runtime_error("Unable to initialize lua interpretor");
         }
@@ -250,6 +248,10 @@ namespace Cassius {
         return lua_gettop(interp);
     }
 
+    ScriptLanguages CluaEngine::lang() const
+    {
+        return ScriptLanguages::LANG_LUA;
+    }
 }
 
 extern "C" CASSIUS_API Cassius::Engine* new_CassiusCluaEngine(void)

@@ -28,6 +28,7 @@ namespace Cassius {
         virtual void Push(const char *s);
         virtual void Pop(size_t n=1);
         virtual size_t StackSize();
+        virtual ScriptLanguages lang() const;
 
       private:
         CluaEngine(const CluaEngine &other);
