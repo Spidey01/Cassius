@@ -16,17 +16,13 @@ void run_test(const char* name)
     if (!engine)
         throw TestFailure("Manager::createEngine() returned NULL");
 
-    std::stringstream code;
-    code
+    Cassius::SourceStream source;
+    source.to_ostream()
         << "-- A simple function" << std::endl
         << "function from_script(a, b)" << std::endl
         << '\t' << "print(\"Lua from_script() called with args\")" << std::endl
         << '\t' << "return a + b" << std::endl
         << "end" << std::endl;
-
-    // XXX: Causes nil instead of _G["from_script"] to be pushed?!?
-    // Cassius::SourceStream source(code);
-    Cassius::SourceString source(code.str());
 
     std::cout << "Evaluating code: " << std::endl
               << source.get() << std::endl;

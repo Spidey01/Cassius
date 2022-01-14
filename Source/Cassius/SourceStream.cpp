@@ -7,16 +7,22 @@
 #include <Cassius/SourceStream.hpp>
 
 using std::istream;
+using std::ostream;
 using std::string;
 
-namespace Cassius {
-    SourceStream::SourceStream(istream &stream)
+namespace Cassius
+{
+    SourceStream::SourceStream()
         : Source()
+        , mStream()
     {
-        while (stream.good()) {
-            this->code.sputc(stream.get());
-        }
-        // this should deal with errors by throwing
+    }
+
+    SourceStream::SourceStream(istream& stream)
+        : Source()
+        , mStream()
+    {
+        mStream << stream.rdbuf();
     }
 
     SourceStream::~SourceStream()
@@ -25,8 +31,16 @@ namespace Cassius {
 
     string SourceStream::get() const
     {
-        return code.str();
+        return mStream.str();
     }
-}
 
+    ostream& SourceStream::to_ostream()
+    {
+        return mStream;
+    }
 
+    istream& SourceStream::to_istream()
+    {
+        return mStream;
+    }
+} // namespace Cassius

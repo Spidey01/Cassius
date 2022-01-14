@@ -3,24 +3,44 @@
 // SPDX-License-Identifier: ISC
 // Copyright 2010, Terry M. Poulin.
 
-#include <string>
 #include <iosfwd>
 #include <sstream>
+#include <string>
 
 #include "Source.hpp"
 
-namespace Cassius {
+namespace Cassius
+{
     /** Simple class representing an executable chunk of Source code as a istream
      */
-    class CASSIUS_API SourceStream : public Source {
+    class CASSIUS_API SourceStream
+        : public Source
+    {
       public:
-        SourceStream(std::istream &stream);
+        SourceStream();
+        SourceStream(std::istream& stream);
         virtual ~SourceStream();
         virtual std::string get() const;
 
+        /**
+         * @brief Allows raw ostream access.
+         * 
+         * Useful if you want to build a Source using operator<<.
+         * 
+         * @returns reference to the internal stream.
+         */
+        std::ostream& to_ostream();
+
+        /**
+         * @brief Allows raw istream access.
+         * 
+         * @returns reference to the internal stream.
+         */
+        std::istream& to_istream();
+
       private:
-        std::stringbuf code;
+        std::stringstream mStream;
     };
-}
+} // namespace Cassius
 
 #endif

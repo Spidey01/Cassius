@@ -37,6 +37,10 @@ Types of changes
 
 - Premake4 build system.
 
+## Fixed
+
+- SourceStream being junk.
+
 ## [1.x] - 2010 to 2011 development
 
 ### Added
