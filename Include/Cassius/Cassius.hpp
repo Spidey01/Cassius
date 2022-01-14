@@ -49,21 +49,6 @@ namespace Cassius {
         LANG_PYTHON,
         LANG_ECMASCRIPT,
     };
-
-    /**
-     * Enumeration of backends that may be embedded.
-     *
-     * This will eventually be used, to handle situations such as choosing
-     * whether Mozilla SpiderMonkey or Google V8 is used as a backend for
-     * EcmaScript/JavaScript.
-     */
-    enum Backends {
-        IMPL_DEFAULT,
-        IMPL_CLUA,
-        IMPL_CPYTHON,
-        IMPL_SPIDERMONKEY,
-        IMPL_V8,
-    };
 }
 #endif
 
