@@ -1,6 +1,10 @@
 # vim: set filetype=cmake tabstop=4 shiftwidth=4 expandtab foldmethod=marker :
 cmake_minimum_required(VERSION 3.0...3.22 FATAL_ERROR)
 
+if (NOT DEFINED ENV{VCPKG_ROOT} AND EXISTS "${PROJECT_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake")
+    set(CMAKE_TOOLCHAIN_FILE "${PROJECT_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
+endif ()
+
 project(Cassius
     VERSION 2.0
     LANGUAGES CXX)
