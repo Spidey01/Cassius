@@ -20,10 +20,14 @@ Types of changes
 
 - CMake build system.
   - CPack for packaging.
-  - CTest for unit testing
+  - CTest for unit testing.
+  - CMake presets for ease of development.
 - Unit tests
 - LICENSE.txt and associated SPDX IDs, etc.
 - CHANGELOG.md
+- Example program
+- Support for vcpkg
+- ScriptFunction for bridging script functions to C++14
 
 ## Changed
 
