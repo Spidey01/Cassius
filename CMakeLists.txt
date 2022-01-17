@@ -123,6 +123,7 @@ if (BUILD_DOCS)
             ${PROJECT_SOURCE_DIR}/Include/
             ${PROJECT_SOURCE_DIR}/LICENSE.txt
             ${PROJECT_SOURCE_DIR}/README.md
+            ${PROJECT_SOURCE_DIR}/INSTALL.md
             ALL
             COMMENT "Generate documentation with Doxygen")
 
