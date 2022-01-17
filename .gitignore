@@ -1,5 +1,7 @@
 # Good choice for cmake build.
 build*/*
+# If cloning vcpkg to PROJECT_SOURCE_DIR.
+vcpkg/
 # vim swap files
 .*.sw?
 # Emacs stuff
@@ -7,3 +9,4 @@ build*/*
 *~
 # VS Code stuff.
 .vscode
+
